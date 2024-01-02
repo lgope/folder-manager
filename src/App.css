@@ -24,20 +24,20 @@
   display: flex;
 }
 
-.folder-root-data {
+/* .folder-root-data {
   box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
   border-radius: 10px;
-}
+} */
 
 ul {
   list-style: none;
 }
 
-.folder-root-data ul ul {
+/* .folder-root-data ul ul {
   margin-left: 5px;
-}
+} */
 
-.folder-tree {
+/* .folder-tree {
   background-color: #fff;
   border-radius: 10px;
   transition: 0.3s;
@@ -45,6 +45,25 @@ ul {
   -moz-transition: 0.3s;
   -ms-transition: 0.3s;
   -o-transition: 0.3s;
+} */
+
+.folder-container {
+  display: grid;
+  column-gap: 50px;
+  grid-template-columns: auto auto auto;
+  /* background-color: #2196F3; */
+  padding: 20px;
+}
+
+.new-folder-action,
+.folder {
+  /* background-color: rgba(255, 255, 255, 0.8); */
+  /* border: 1px solid rgba(0, 0, 0, 0.8); */
+  display: grid;
+  padding: 10px;
+  margin-bottom: 5px;
+  font-size: 30px;
+  text-align: center;
 }
 
 li ul {
@@ -74,7 +93,8 @@ li ul {
 
 .folder-name i,
 span {
-  font-size: 18px;
+  color: #000;
+  font-size: 12px;
 }
 
 .folder-name span {
@@ -87,10 +107,10 @@ span {
   margin-left: 15px;
 }
 
-.new-folder-action {
+/* .new-folder-action {
   margin-left: auto;
   margin-right: 5px;
-}
+} */
 
 .folder-data {
   color: #000;

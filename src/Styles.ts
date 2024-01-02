@@ -32,7 +32,7 @@ export const FolderLi = styled.li`
 `;
 
 export const Icon = styled.i`
-  font-size: 16px;
+  font-size: 35px;
   color: ${(props) => (props.color ? props.color : '#5e5e5e')};
   cursor: pointer;
 `;

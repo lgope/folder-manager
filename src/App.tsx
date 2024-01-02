@@ -12,17 +12,18 @@ const App: FC = (): ReactElement => {
   const folder = useSelector(selectFolders);
   const dispatch = useDispatch();
 
+  console.log(folder)
   useEffect(() => {
     dispatch(fetchFolderRoot());
   }, [dispatch]);
 
   return (
     <div className='App'>
-      {folder && !folder?.data?.length ? (
+      {folder && folder?.isLoading ? (
         <h2>Loading....</h2>
       ) : (
         <div className='folder-root-data'>
-          <Folders folders={folder?.data} />
+          <Folders folders={folder?.data || []} />
         </div>
       )}
     </div>
