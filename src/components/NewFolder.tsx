@@ -3,16 +3,20 @@ import Popup from "./popup";
 import { Icon, Input, Button } from "../Styles";
 
 // redux stuff
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addFolder } from "../redux/actions/folderAction";
 
 // types
-import { IParentFolder } from "../types/interfaces";
+import { selectFolders } from "../redux/reducers/folderReducer";
 
-const NewFolder = ({ parentFolder }: IParentFolder) => {
+const NewFolder = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [name, setName] = useState("");
+
+  const folderData = useSelector(selectFolders);
   const dispatch = useDispatch();
+
+  const currentFolder = folderData.path[folderData.path.length-1];
 
   const togglePopup = (e: any) => setIsOpen(!isOpen);
 
@@ -20,8 +24,18 @@ const NewFolder = ({ parentFolder }: IParentFolder) => {
     setName(e.target.value);
   };
 
+  // ADD TODO: ADD FUNCTIONALITY
+
   const onSubmit = (e: any) => {
     e.preventDefault();
+
+    // const updatedPath = folderData.path.slice(0, index);
+
+      let subFolder = folderData.data[updatedPath[0]];
+      updatedPath.shift();
+      updatedPath.forEach((pathName) => {
+        subFolder =  subFolder.child[pathName];
+      });
 
     console.log({ name });
 
@@ -39,7 +53,7 @@ const NewFolder = ({ parentFolder }: IParentFolder) => {
       <Popup isOpen={isOpen} onClose={togglePopup}>
         <form onSubmit={onSubmit}>
           <div className="popup-body">
-            <h4 className="title">Add Folder in `{parentFolder.name}`</h4>
+            <h4 className="title">Add Folder in `{currentFolder}`</h4>
             <Input
               type="text"
               name="name"

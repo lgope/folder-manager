@@ -1,22 +1,17 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { folderTreeData } from '../../utils/data';
-import {merge} from 'lodash'
-
 
 export const folderReducer = createSlice({
   name: 'folder',
   initialState: {
-    data: folderTreeData,
-    currentFolderAncestor: {},
+    data: null,
+    subFolder: null,
+    path: [],
     isLoading: true,
   },
   reducers: {
     newFolder: (state, action) => {
-      console.log({first: action.payload})
-
       state.data = action.payload;
       state.isLoading = false;
-      console.log({ca: state.currentFolderAncestor})
     },
 
     removeFolder: (state, action) => {
@@ -26,18 +21,29 @@ export const folderReducer = createSlice({
 
     getFolderRoot: (state, action) => {
       state.data = action.payload;
+      state.subFolder = action.payload;
       state.isLoading = false;
     },
 
     updateRoot: (state, action) => {
-      state.currentFolderAncestor = action.payload;
+      // state.currentFolderAncestor = action.payload;
       state.data = action.payload.child;
       state.isLoading = false;
     },
+
+    updateSubFolderData: (state, action) => {
+      state.path = action.payload.path;
+      state.subFolder = action.payload.subFolder;
+    },
+
+    updatePath: (state, action) => {
+      state.path = action.payload;
+      state.subFolder = action.payload;
+    }
   },
 });
 
-export const { getFolderRoot, newFolder, removeFolder, updateRoot } = folderReducer.actions;
+export const { getFolderRoot, newFolder, removeFolder, updateRoot, updateSubFolderData } = folderReducer.actions;
 
 // export const selectFolders = (state: { folder: [], isLoading: boolean }) => state.folder;
 export const selectFolders = (state) => state.folder;

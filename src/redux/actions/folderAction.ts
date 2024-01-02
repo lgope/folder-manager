@@ -3,16 +3,21 @@ import {
   newFolder,
   removeFolder,
   updateRoot,
+  updateSubFolderData
 } from "../reducers/folderReducer";
 
 import { Dispatch } from "redux";
 import { v4 as uuidv4 } from "uuid";
 
-import { folderTreeData } from "../../utils/data";
+import { folderTreeData, folderData } from "../../utils/data";
 
 export const fetchFolderRoot = () => (dispatch: Dispatch) => {
-  dispatch(getFolderRoot(folderTreeData));
+  dispatch(getFolderRoot(folderData));
 };
+
+export const updateSubFolder = (path, subFolder) => (dispath: Dispatch) => {
+  dispath(updateSubFolderData({path, subFolder}))
+}
 
 export const updateFolderRoot = (data) => (dispatch: Dispatch) => {
   dispatch(updateRoot(data));

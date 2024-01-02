@@ -37,3 +37,44 @@ export const folderTreeData = [
     __v: { $numberInt: "0" },
   },
 ];
+
+export const folderData = {
+  src: {
+    name: "src",
+    type: "folder",
+    child: {
+      assets: {
+        name: "assets",
+        type: "folder",
+        child: {
+          images: {
+            name: "images",
+            type: "folder",
+            child: {},
+          },
+        },
+      },
+      public: {
+        name: "public",
+        type: "folder",
+        child: {},
+      },
+    },
+  },
+  pages: {
+    name: "pages",
+    type: "folder",
+    child: {},
+  },
+
+  component: {
+    name: "component",
+    type: "folder",
+    child: {},
+  },
+  utils: {
+    name: "utils",
+    type: "folder",
+    child: {},
+  },
+};
