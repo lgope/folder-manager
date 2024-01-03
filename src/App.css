@@ -62,14 +62,25 @@ ul {
 }
 
 .new-folder-action,
+.folder-caption,
 .folder {
   /* background-color: rgba(255, 255, 255, 0.8); */
   /* border: 1px solid rgba(0, 0, 0, 0.8); */
+  position: relative;
   display: grid;
   padding: 10px;
   margin-bottom: 5px;
   font-size: 30px;
   text-align: center;
+}
+
+.folder-caption:hover {
+  background-color: rgb(236, 236, 236);
+}
+
+/* .myDIV:hover + .hide */
+.folder:hover .delete-action i {
+  visibility: visible;
 }
 
 .folder i:hover {
@@ -112,15 +123,22 @@ span {
   font-weight: 500;
 }
 
-.delete-action i {
-  font-size: 15px;
-  margin-left: 15px;
+.delete-action {
+  position: absolute;
+  top: -4px;
+    right: 8px;
 }
 
-/* .new-folder-action {
-  margin-left: auto;
-  margin-right: 5px;
-} */
+.delete-action i {
+  visibility: hidden;
+  font-size: 12px;
+  margin-left: 15px;
+  color: #5e5e5e;
+}
+
+.delete-action i:hover {
+  color: rgb(220, 32, 32);
+}
 
 .folder-data {
   color: #000;

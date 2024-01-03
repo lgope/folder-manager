@@ -78,3 +78,48 @@ export const folderData = {
     child: {},
   },
 };
+
+
+export const deletePropertyPath = (obj, path) => {
+
+  if (!obj || !path) {
+    return;
+  }
+
+  if (typeof path === 'string') {
+    path = path.split('.');
+  }
+
+  for (var i = 0; i < path.length - 1; i++) {
+
+    obj = obj[path[i]];
+
+    if (typeof obj === 'undefined') {
+      return;
+    }
+  }
+
+  delete obj[path.pop()];
+
+  return obj;
+};
+
+// const objDataStructure = {
+//   a: {
+//     id: 'a',
+//     parentId: '',
+//     child: ['c']
+//   },
+
+//   b: {
+//     id: 'b',
+//     parentId: '',
+//     child: []
+//   },
+
+//   c: {
+//     id: 'c',
+//     parentId: 'a',
+//     child: []
+//   },
+// }

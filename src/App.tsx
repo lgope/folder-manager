@@ -1,4 +1,8 @@
-import { FC, ReactElement, useEffect } from "react";
+import { FC, ReactElement, useEffect, useRef } from "react";
+
+
+import { ContextMenu } from 'primereact/contextmenu';
+        
 import Folders from "./components/Folders";
 import "./App.css";
 
@@ -11,7 +15,11 @@ const App: FC = (): ReactElement => {
   const folderData = useSelector(selectFolders);
   const dispatch = useDispatch();
 
-  console.log({folderData})
+  const cm = useRef(null);
+    const items = [
+        { label: 'View', icon: 'pi pi-fw pi-search' },
+        { label: 'Delete', icon: 'pi pi-fw pi-trash' }
+    ];
 
   useEffect(() => {
     dispatch(fetchFolderRoot());
@@ -59,6 +67,9 @@ const App: FC = (): ReactElement => {
           <Folders folders={folderData?.subFolder || {}} />
         </div>
       )}
+   
+            <ContextMenu model={items} ref={cm} breakpoint="767px" />
+
     </div>
   );
 };

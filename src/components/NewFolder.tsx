@@ -27,8 +27,6 @@ const NewFolder = () => {
     setName(e.target.value);
   };
 
-  // ADD TODO: ADD FUNCTIONALITY
-
   const onSubmit = (e: any) => {
     e.preventDefault();
 
@@ -51,7 +49,7 @@ const NewFolder = () => {
 
     setIsOpen(false);
   };
-  
+
   return (
     <>
       <Icon
