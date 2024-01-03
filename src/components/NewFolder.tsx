@@ -9,6 +9,8 @@ import { addFolder } from "../redux/actions/folderAction";
 // types
 import { selectFolders } from "../redux/reducers/folderReducer";
 
+import {cloneDeepWith, noop} from 'lodash'
+
 const NewFolder = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [name, setName] = useState("");
@@ -16,7 +18,8 @@ const NewFolder = () => {
   const folderData = useSelector(selectFolders);
   const dispatch = useDispatch();
 
-  const currentFolder = folderData.path[folderData.path.length-1];
+  // current folder name
+  const currentFolder = folderData.path[folderData.path.length - 1];
 
   const togglePopup = (e: any) => setIsOpen(!isOpen);
 
@@ -29,20 +32,26 @@ const NewFolder = () => {
   const onSubmit = (e: any) => {
     e.preventDefault();
 
-    // const updatedPath = folderData.path.slice(0, index);
+    const newFolder = { [name]: { name, type: "folder", child: {} } };
 
-      let subFolder = folderData.data[updatedPath[0]];
-      updatedPath.shift();
-      updatedPath.forEach((pathName) => {
-        subFolder =  subFolder.child[pathName];
-      });
+    // current folder childs
+    const updateSubFolder = { ...folderData.subFolder, ...newFolder };
 
-    console.log({ name });
+    let newFolderUpdateData = {...folderData.data};
 
-    dispatch(addFolder({ name, ancestor: parentFolder._id }));
+
+    // update all folder data
+    // :home/ src/ assets/ images
+
+    const result = cloneDeepWith(newFolderUpdateData, (value) => {
+      return value.name === currentFolder ? { ...value, child: {...updateSubFolder} } : noop();
+    });
+
+    dispatch(addFolder(updateSubFolder, result));
 
     setIsOpen(false);
   };
+  
   return (
     <>
       <Icon

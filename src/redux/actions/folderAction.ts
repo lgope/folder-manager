@@ -23,18 +23,8 @@ export const updateFolderRoot = (data) => (dispatch: Dispatch) => {
   dispatch(updateRoot(data));
 }
 
-export const addFolder = (body) => (dispatch: Dispatch) => {
-  const updatedFt = updateFolderTree(folderTreeData, {
-    _id: uuidv4(),
-    name: body.name,
-    ancestor: body.ancestor,
-    child: [],
-    designation: "folder",
-  }, "add");
-
-  // console.log({updatedFt})
-
-  dispatch(newFolder(updatedFt));
+export const addFolder = (subFolder, folderData) => (dispatch: Dispatch) => {
+  dispatch(newFolder({subFolder, folderData}));
 };
 
 export const backWardFolder = (ancestor) => (dispatch: Dispatch) => {

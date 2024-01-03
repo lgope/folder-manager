@@ -18,7 +18,8 @@
 .folder-path button {
   border: none;
   margin-right: 5px;
-  font-size: 15px
+  font-size: 15px;
+  cursor: pointer;
 }
 
 .App h2 {
@@ -69,6 +70,10 @@ ul {
   margin-bottom: 5px;
   font-size: 30px;
   text-align: center;
+}
+
+.folder i:hover {
+  color: rgb(152, 222, 222);
 }
 
 li ul {

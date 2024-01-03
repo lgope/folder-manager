@@ -10,7 +10,9 @@ export const folderReducer = createSlice({
   },
   reducers: {
     newFolder: (state, action) => {
-      state.data = action.payload;
+      // subFolder, folderData
+      state.data = action.payload.folderData;
+      state.subFolder = action.payload.subFolder;
       state.isLoading = false;
     },
 

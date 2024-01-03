@@ -5,6 +5,7 @@ import { selectFolders } from "../redux/reducers/folderReducer";
 import { backWardFolder } from "../redux/actions/folderAction";
 
 const FolderTree = ({ folders }: any) => {
+  console.log({folders})
   return (
     <div className="folder-container">
       {Object.keys(folders).length ? (

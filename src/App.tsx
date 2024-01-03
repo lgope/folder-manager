@@ -11,6 +11,8 @@ const App: FC = (): ReactElement => {
   const folderData = useSelector(selectFolders);
   const dispatch = useDispatch();
 
+  console.log({folderData})
+
   useEffect(() => {
     dispatch(fetchFolderRoot());
   }, [dispatch]);
