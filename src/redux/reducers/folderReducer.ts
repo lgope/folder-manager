@@ -23,8 +23,13 @@ export const folderReducer = createSlice({
       const updatedSubFolder = state.subFolder;
       updatedSubFolder.push(newFolderData);
 
+       // update path tree last index data
+       const updatedPathTree = [...state.pathTree];
+       updatedPathTree[updatedPathTree.length-1] = updatedSubFolder;
+
       state.data = updateFolderTree;
       state.subFolder = updatedSubFolder;
+      state.pathTree = updatedPathTree;
 
       state.isLoading = false;
     },
@@ -69,6 +74,8 @@ export const folderReducer = createSlice({
 
     updateBreadCrumbTree: (state, action) => {
       const pathIndex = action.payload;
+
+      // console.log({pathIndex})
 
       if (pathIndex === "home") {
         state.subFolder = state.data.child;

@@ -10,7 +10,7 @@ const DeleteFolder = ({ openConfirmationDialog, setOpenConfirmationDialog, file 
 
   const dispatch = useDispatch();
 
-  const togglePopup = (e: any) => setOpenConfirmationDialog(!openConfirmationDialog);
+  const togglePopup = () => setOpenConfirmationDialog(!openConfirmationDialog);
 
   const onSubmit = (e: any) => {
     e.preventDefault();
@@ -23,7 +23,8 @@ const DeleteFolder = ({ openConfirmationDialog, setOpenConfirmationDialog, file 
       <Popup isOpen={openConfirmationDialog} onClose={togglePopup}>
         <form onSubmit={onSubmit}>
           <div className="popup-body">
-            <h4 className="title">Delete `{file.name}`</h4>
+            <h4 className="title">Are You Sure?</h4>
+            <h5>This will delete permenantly!</h5>
           </div>
           <div className="popup-action">
             <Button type="button" color="#a6e39a" onClick={togglePopup}>
