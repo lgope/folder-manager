@@ -1,14 +1,14 @@
 import "./File.css";
 
-import { ListItem, ListItemAvatar, ListItemText, Avatar } from "@mui/material";
+import { ListItem, ListItemAvatar, ListItemText } from "@mui/material";
 
-import FolderIcon from "@mui/icons-material/Folder";
-import InsertDriveFileIcon from "@mui/icons-material/InsertDriveFile";
 import { updateSubFolder } from "../../redux/actions/folderAction";
 import { useDispatch } from "react-redux";
 
 import FileActions from "./FileActions";
 
+import FileImageIcon from "../../assets/images/file.png";
+import FolderImageIcon from "../../assets/images/folder.png";
 
 const File = ({file}) => {
   const dispatch = useDispatch();
@@ -19,14 +19,15 @@ const File = ({file}) => {
 
   return (
     <div
-      className="File"
+      className={`File ${!file.isFolder ? 'file-node' : ""}`}
       onDoubleClick={handleClick}
     >
       <ListItem>
         <ListItemAvatar>
-          <Avatar>
-            {file.isFolder ? <FolderIcon /> : <InsertDriveFileIcon />}
-          </Avatar>
+          {/* <Avatar> */}
+            {/* {file.isFolder ? <FolderIcon /> : <InsertDriveFileIcon />} */}
+            {<img src={file.isFolder ? FolderImageIcon : FileImageIcon} alt={file.name} />}
+          {/* </Avatar> */}
         </ListItemAvatar>
         <ListItemText className="filename" primary={file.name} />
 

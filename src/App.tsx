@@ -18,6 +18,7 @@ const theme = createTheme({
   palette: {
     primary: {
       main: "#746de4",
+      // main: "#6d97e4",
     },
     secondary: {
       main: green[500],
@@ -44,7 +45,8 @@ const App: FC = (): ReactElement => {
     setSearchValue(value);
   };
 
-  if (folderData?.subFolder) {
+  // if (folderData?.subFolder && folderData?.subFolder.length) {
+  if (folderData?.subFolder && folderData?.subFolder.length) {
     filteredSubFolderData = folderData.subFolder.filter((file) =>
     file.name.toLowerCase().includes(searchValue.toLowerCase()));
   }

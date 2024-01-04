@@ -6,9 +6,19 @@
     user-select: none;
 }
 
+.File img {
+    height: 35px;
+    width: auto;
+}
+
 .File:hover {
     cursor: pointer;
-    background: #fafafa;
+    /* background: #fafafa; */
+    background: #d2eaf4;
+}
+
+.file-node:hover {
+    background: #f8f7ce;
 }
 
 .File[data-selected=true] {

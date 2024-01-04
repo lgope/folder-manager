@@ -60,7 +60,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-const Navbar = ({handleOnSearch}) => {
+const Navbar = ({ handleOnSearch }) => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
   const [openNewFolderDialog, setOpenNewFolderDialog] = useState(false);
@@ -160,6 +160,6 @@ const Navbar = ({handleOnSearch}) => {
       />
     </Fragment>
   );
-}
+};
 
 export default Navbar;

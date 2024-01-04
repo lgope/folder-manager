@@ -1,6 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { deleteNode, insertNodes } from "../../utils/treeNode";
 
+// TODO: update path tree data with child on add, delete and update folder
+
 export const folderReducer = createSlice({
   name: "folder",
   initialState: {
@@ -23,9 +25,9 @@ export const folderReducer = createSlice({
       const updatedSubFolder = state.subFolder;
       updatedSubFolder.push(newFolderData);
 
-       // update path tree last index data
-       const updatedPathTree = [...state.pathTree];
-       updatedPathTree[updatedPathTree.length-1] = updatedSubFolder;
+      // update path tree last index data
+      const updatedPathTree = [...state.pathTree];
+      updatedPathTree[updatedPathTree.length - 1] = updatedSubFolder;
 
       state.data = updateFolderTree;
       state.subFolder = updatedSubFolder;
@@ -39,13 +41,21 @@ export const folderReducer = createSlice({
 
       const updatedFolderTree = deleteNode(state.data, fileId);
 
-      const updateSubFolder = state.subFolder;
+      let updateSubFolder = state.subFolder;
+      updateSubFolder = updateSubFolder.filter(
+        (folder) => folder.id !== fileId
+      );
+
+      // update path tree last index data
+      const updatedPathTree = state.pathTree;
+
+      updatedPathTree[updatedPathTree.length - 1] = [updateSubFolder];
 
       state.data = updatedFolderTree;
 
-      state.subFolder = updateSubFolder.filter(
-        (folder) => folder.id !== fileId
-      );
+      state.subFolder = updateSubFolder;
+
+      state.pathTree = updatedPathTree;
 
       state.isLoading = false;
     },
@@ -59,7 +69,10 @@ export const folderReducer = createSlice({
     updateSubFolderData: (state, action) => {
       const updatedPath = state.path;
       const updatedPathTree = state.pathTree;
+
       const file = action.payload;
+
+      console.log(file);
 
       // add new path
       updatedPath.push({ id: file.id, name: file.name });
@@ -84,11 +97,17 @@ export const folderReducer = createSlice({
 
         state.path = [];
       } else {
-        state.subFolder = state.pathTree[pathIndex];
+        const updatedSubFolder = state.subFolder;
 
-        state.pathTree = state.pathTree.slice(0, pathIndex + 1);
+        const updatedPathTree = state.pathTree;
 
-        state.path = state.path.slice(0, pathIndex + 1);
+        const updatedPath = state.path;
+
+        state.subFolder = updatedPathTree[pathIndex];
+
+        state.pathTree = updatedPathTree.slice(0, pathIndex + 1);
+
+        state.path = updatedPath.slice(0, pathIndex + 1);
       }
     },
   },
