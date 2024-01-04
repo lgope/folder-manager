@@ -1,8 +1,7 @@
-import { FC, ReactElement, useEffect, useRef } from "react";
+import { FC, ReactElement, useEffect } from "react";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
-import { green, purple } from "@mui/material/colors";
+import { green } from "@mui/material/colors";
 
-import Folders from "./components/Folders";
 import "./App.css";
 
 import Navbar from "./components/Navbar/Navbar";
@@ -10,9 +9,8 @@ import Navbar from "./components/Navbar/Navbar";
 // redux stuff
 import { useSelector, useDispatch } from "react-redux";
 import { selectFolders } from "./redux/reducers/folderReducer";
-import { fetchFolderRoot, updateSubFolder } from "./redux/actions/folderAction";
+import { fetchFolderRoot } from "./redux/actions/folderAction";
 import FileList from "./components/FileList/FileList";
-import ContextMenu from "./components/ContextMenu/ContextMenu";
 import Loader from "./components/Loader/Loader";
 import BreadCrumbText from "./components/BreadCrumb/BreadCrumbText";
 

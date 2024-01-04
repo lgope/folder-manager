@@ -1,4 +1,3 @@
-import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@mui/styles';
 import CircularProgress from '@mui/material/CircularProgress';
@@ -10,7 +9,7 @@ const styles = theme => ({
   },
 });
 
-function Loader(props) {
+const Loader = (props) => {
     const { classes } = props;
     return (
         <Grid container justifyContent="center">

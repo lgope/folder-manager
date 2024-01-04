@@ -3,7 +3,6 @@ import {
   newFolder,
   removeFolder,
   updateBreadCrumbTree,
-  updateRoot,
   updateSubFolderData,
 } from "../reducers/folderReducer";
 
@@ -19,18 +18,14 @@ export const updateSubFolder = (file) => (dispath: Dispatch) => {
   dispath(updateSubFolderData(file));
 };
 
-export const updateFolderRoot = (data) => (dispatch: Dispatch) => {
-  dispatch(updateRoot(data));
-};
-
 export const addFolder = (folder) => (dispatch: Dispatch) => {
   dispatch(newFolder(folder));
 };
 
-export const deleteFolder = (subFolder, fulderData) => (dispatch: Dispatch) => {
-  dispatch(removeFolder({ subFolder, fulderData }));
+export const deleteFolder = (id) => (dispatch: Dispatch) => {
+  dispatch(removeFolder(id));
 };
 
 export const updateBreadCrumb = (pathIndex) => (dispatch: Dispatch) => {
-  dispatch(updateBreadCrumbTree(pathIndex))
-}
+  dispatch(updateBreadCrumbTree(pathIndex));
+};

@@ -1,4 +1,4 @@
-import * as React from "react";
+import { Fragment, useState } from "react";
 import { styled, alpha } from "@mui/material/styles";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
@@ -61,22 +61,27 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 export default function Navbar() {
-  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
-  const [openNewFolderDialog, setOpenNewFolderDialog] = React.useState(false);
+  const [openNewFolderDialog, setOpenNewFolderDialog] = useState(false);
 
   const open = Boolean(anchorEl);
+
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
-  const handleClose = (e) => {
-    console.log(e);
-    setOpenNewFolderDialog(true);
+
+  const handleClose = () => {
     setAnchorEl(null);
   };
 
+  const handleOpenAddFolderDialog = () => {
+    setAnchorEl(null);
+    setOpenNewFolderDialog(true);
+  };
+
   return (
-    <React.Fragment>
+    <Fragment>
       <Box sx={{ flexGrow: 1 }}>
         <AppBar position="static">
           <Toolbar>
@@ -137,7 +142,7 @@ export default function Navbar() {
                   <MenuItem
                     key={option}
                     selected={option === "Pyxis"}
-                    onClick={handleClose}
+                    onClick={handleOpenAddFolderDialog}
                   >
                     {option}
                   </MenuItem>
@@ -152,6 +157,6 @@ export default function Navbar() {
         openNewFolderDialog={openNewFolderDialog}
         setOpenNewFolderDialog={setOpenNewFolderDialog}
       />
-    </React.Fragment>
+    </Fragment>
   );
 }

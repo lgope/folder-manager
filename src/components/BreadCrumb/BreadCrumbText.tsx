@@ -1,9 +1,7 @@
-import * as React from 'react';
 import { emphasize, styled } from '@mui/material/styles';
 import Breadcrumbs from '@mui/material/Breadcrumbs';
 import Chip from '@mui/material/Chip';
 import HomeIcon from '@mui/icons-material/Home';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { selectFolders } from '../../redux/reducers/folderReducer';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateBreadCrumb } from '../../redux/actions/folderAction';
@@ -26,7 +24,7 @@ const StyledBreadcrumb = styled(Chip)(({ theme }) => {
       backgroundColor: emphasize(backgroundColor, 0.12),
     },
   };
-}) as typeof Chip; // TypeScript only: need a type cast here because https://github.com/Microsoft/TypeScript/issues/26591
+}) as typeof Chip;
 
 export default function BreadCrumbText() {
   const folderData = useSelector(selectFolders);

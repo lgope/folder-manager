@@ -1,4 +1,4 @@
-import {v4 as uuidv4} from 'uuid';
+import { v4 as uuidv4 } from "uuid";
 
 export const folderTreeData = [
   {
@@ -81,6 +81,47 @@ export const folderData = {
   },
 };
 
+/**
+ * Main Data
+ * allFolder: []
+ * subFolder: []
+ * 
+ * path : [{id: parentId, name: folderName}]
+ * pathTree : [[file.child],......]
+ * 
+ */
+
+const folderTreeDemoData = {
+  id: 1,
+  name: "root",
+  isFolder: true,
+  parentId: "",
+  child: [
+    {
+      id: 1.1,
+      name: "public",
+      parentId: 1,
+      isFolder: true,
+      child: [
+        {
+          id: 1.121212,
+          name: "index",
+          isFolder: true,
+          child: [
+            {
+              id: 2,
+              name: "public",
+              parentId: 1.1,
+              isFolder: true,
+              child: [{ id: 2.1, name: "index", isFolder: true, child: [] }],
+            },
+          ],
+        },
+      ],
+    },
+  ],
+};
+
 export const folderTree = {
   id: uuidv4(),
   name: "root",
@@ -92,7 +133,7 @@ export const folderTree = {
       name: "public",
       parentId: "root",
       isFolder: true,
-      child: [{ id: uuidv4(), name: "index", isFolder: true, child:[] }],
+      child: [{ id: uuidv4(), name: "index", isFolder: true, child: [] }],
     },
     {
       id: uuidv4(),
@@ -106,13 +147,28 @@ export const folderTree = {
           isFolder: true,
           parentId: "",
           child: [
-            { id: uuidv4(), name: "images", isFolder: true, child: [
-              { id: uuidv4(), name: "ollyo", isFolder: true, child: [] },
-              { id: uuidv4(), name: "jakir vai", isFolder: true, child: [] },
-              { id: uuidv4(), name: "sajeeb vai", isFolder: true, child: [
-                { id: uuidv4(), name: "sifat vai", isFolder: true, child: [] }
-              ] }
-            ] },
+            {
+              id: uuidv4(),
+              name: "images",
+              isFolder: true,
+              child: [
+                { id: uuidv4(), name: "ollyo", isFolder: true, child: [] },
+                { id: uuidv4(), name: "jakir vai", isFolder: true, child: [] },
+                {
+                  id: uuidv4(),
+                  name: "sajeeb vai",
+                  isFolder: true,
+                  child: [
+                    {
+                      id: uuidv4(),
+                      name: "sifat vai",
+                      isFolder: true,
+                      child: [],
+                    },
+                  ],
+                },
+              ],
+            },
             { id: uuidv4(), name: "Home 1", isFolder: true, child: [] },
             { id: uuidv4(), name: "Login", isFolder: true, child: [] },
           ],
@@ -185,29 +241,4 @@ export const getHumanFileSize = (bytes) => {
     ("kMGTPEZY"[e - 1] || "") +
     "B"
   );
-};
-
-/**
- * Calculate available actions for selected files, excluding non coincidences
- * @param {Array<Object>} files
- * @returns {Array<String>}
- */
-export const getActionsByMultipleFiles = (files, acts = []) => {
-  files.forEach((file) => {
-    const fileActs = getActionsByFile(file);
-    // intersects previous actions with the following to leave only coincidences
-    acts = acts.length
-      ? acts.filter((value) => -1 !== fileActs.indexOf(value))
-      : fileActs;
-  });
-
-  if (files.length > 1) {
-    acts.splice(acts.indexOf("open"), acts.indexOf("open") >= 0);
-    acts.splice(acts.indexOf("edit"), acts.indexOf("edit") >= 0);
-    acts.splice(acts.indexOf("compress"), acts.indexOf("compress") >= 0);
-    acts.splice(acts.indexOf("download"), acts.indexOf("download") >= 0);
-    acts.splice(acts.indexOf("rename"), acts.indexOf("rename") >= 0);
-    acts.push("compress");
-  }
-  return acts;
 };
