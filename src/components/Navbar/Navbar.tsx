@@ -60,7 +60,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-export default function Navbar() {
+const Navbar = ({handleOnSearch}) => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
   const [openNewFolderDialog, setOpenNewFolderDialog] = useState(false);
@@ -107,6 +107,7 @@ export default function Navbar() {
                 <SearchIcon />
               </SearchIconWrapper>
               <StyledInputBase
+                onChange={handleOnSearch}
                 placeholder="Search…"
                 inputProps={{ "aria-label": "search" }}
               />
@@ -160,3 +161,5 @@ export default function Navbar() {
     </Fragment>
   );
 }
+
+export default Navbar;

@@ -1,4 +1,4 @@
-import { FC, ReactElement, useEffect } from "react";
+import { FC, ReactElement, useEffect, useState } from "react";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import { green } from "@mui/material/colors";
 
@@ -26,22 +26,38 @@ const theme = createTheme({
 });
 
 const App: FC = (): ReactElement => {
+  const [searchValue, setSearchValue] = useState("");
+
   const folderData = useSelector(selectFolders);
   const dispatch = useDispatch();
+
+  let filteredSubFolderData = [];
 
   useEffect(() => {
     dispatch(fetchFolderRoot());
   }, [dispatch]);
 
+
+  const handleOnSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { value } = e.target;
+
+    setSearchValue(value);
+  };
+
+  if (folderData?.subFolder) {
+    filteredSubFolderData = folderData.subFolder.filter((file) =>
+    file.name.toLowerCase().includes(searchValue.toLowerCase()));
+  }
+
   return (
     <ThemeProvider theme={theme}>
-      <Navbar />
+      <Navbar handleOnSearch={handleOnSearch} />
       <BreadCrumbText />
 
       {folderData && folderData?.isLoading ? (
         <Loader />
       ) : (
-        <FileList fileList={folderData?.subFolder || []} />
+        <FileList fileList={filteredSubFolderData} />
       )}
     </ThemeProvider>
   );

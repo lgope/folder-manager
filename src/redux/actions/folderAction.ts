@@ -26,6 +26,6 @@ export const deleteFolder = (id) => (dispatch: Dispatch) => {
   dispatch(removeFolder(id));
 };
 
-export const updateBreadCrumb = (pathIndex) => (dispatch: Dispatch) => {
+export const updateBreadCrumb = (pathIndex: number | string) => (dispatch: Dispatch) => {
   dispatch(updateBreadCrumbTree(pathIndex));
 };
