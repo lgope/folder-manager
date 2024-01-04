@@ -85,10 +85,10 @@ export const folderData = {
  * Main Data
  * allFolder: []
  * subFolder: []
- * 
+ *
  * path : [{id: parentId, name: folderName}]
  * pathTree : [[file.child],......]
- * 
+ *
  */
 
 const folderTreeDemoData = {
@@ -123,63 +123,67 @@ const folderTreeDemoData = {
 };
 
 export const folderTree = {
-  id: uuidv4(),
+  id: 1,
   name: "root",
   isFolder: true,
   parentId: "",
   child: [
     {
-      id: uuidv4(),
+      id: 1.1,
       name: "public",
-      parentId: "root",
-      isFolder: true,
-      child: [{ id: uuidv4(), name: "index", isFolder: true, child: [] }],
-    },
-    {
-      id: uuidv4(),
-      name: "src",
-      parentId: "",
+      parentId: 1,
       isFolder: true,
       child: [
         {
-          id: uuidv4(),
+          id: 545454,
+          name: "index",
+          parentId: 1.1,
+          isFolder: true,
+          child: [],
+        },
+      ],
+    },
+    {
+      id: 2,
+      name: "src",
+      parentId: 1,
+      isFolder: true,
+      child: [
+        {
+          id: 3,
           name: "components",
           isFolder: true,
-          parentId: "",
+          parentId: 2.1,
           child: [
             {
-              id: uuidv4(),
+              id: 4,
               name: "images",
+              parentId: 3,
               isFolder: true,
               child: [
-                { id: uuidv4(), name: "ollyo", isFolder: true, child: [] },
-                { id: uuidv4(), name: "jakir vai", isFolder: true, child: [] },
                 {
-                  id: uuidv4(),
-                  name: "sajeeb vai",
+                  id: 22222,
+                  name: "ollyo",
                   isFolder: true,
-                  child: [
-                    {
-                      id: uuidv4(),
-                      name: "sifat vai",
-                      isFolder: true,
-                      child: [],
-                    },
-                  ],
+                  parentId: 4,
+                  child: [],
+                },
+                {
+                  id: 33333,
+                  name: "jakir vai",
+                  isFolder: true,
+                  parentId: 4,
+                  child: [],
                 },
               ],
             },
-            { id: uuidv4(), name: "Home 1", isFolder: true, child: [] },
-            { id: uuidv4(), name: "Login", isFolder: true, child: [] },
           ],
         },
-        { id: uuidv4(), name: "App", isFolder: true, child: [] },
-        { id: uuidv4(), name: "index", isFolder: true, child: [] },
-        { id: uuidv4(), name: "data", isFolder: true, child: [] },
       ],
     },
     {
       id: uuidv4(),
+      parentId: 1,
       name: "package.json",
       isFolder: false,
     },

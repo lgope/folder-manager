@@ -20,8 +20,11 @@ export const folderReducer = createSlice({
         newFolderData
       );
 
+      const updatedSubFolder = state.subFolder;
+      updatedSubFolder.push(newFolderData);
+
       state.data = updateFolderTree;
-      state.subFolder = [...state.subFolder, newFolderData];
+      state.subFolder = updatedSubFolder;
 
       state.isLoading = false;
     },
