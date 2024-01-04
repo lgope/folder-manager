@@ -15,6 +15,14 @@
   /* color: white; */
 }
 
+.folder-actions {
+  visibility: hidden;
+}
+
+.File:hover .folder-actions {
+  visibility: visible;
+}
+
 .folder-path button {
   border: none;
   margin-right: 5px;
@@ -52,6 +60,10 @@ ul {
   -ms-transition: 0.3s;
   -o-transition: 0.3s;
 } */
+
+.breadcrumb-text {
+  margin: 10px 10px 10px 10px;
+}
 
 .folder-container {
   display: grid;
@@ -169,4 +181,28 @@ span {
 .popup-body .title {
   font-size: 18px;
   margin-bottom: 20px;
+}
+
+
+.FileList {
+  overflow: auto
+}
+
+.FileList .File .filename > span {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+@media (min-width : 600px) {
+  .FileList .File {
+      float: left;
+      width: 33.3%;
+  }
+}
+@media (min-width : 1024px) {
+  .FileList .File {
+      float: left;
+      width: 25%;
+  }
 }

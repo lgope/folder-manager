@@ -1,3 +1,5 @@
+import {v4 as uuidv4} from 'uuid';
+
 export const folderTreeData = [
   {
     _id: "60a8e2e1c03d13356cfb12b0",
@@ -79,22 +81,68 @@ export const folderData = {
   },
 };
 
+export const folderTree = {
+  id: uuidv4(),
+  name: "root",
+  isFolder: true,
+  parentId: "",
+  child: [
+    {
+      id: uuidv4(),
+      name: "public",
+      parentId: "root",
+      isFolder: true,
+      child: [{ id: uuidv4(), name: "index", isFolder: true, child:[] }],
+    },
+    {
+      id: uuidv4(),
+      name: "src",
+      parentId: "",
+      isFolder: true,
+      child: [
+        {
+          id: uuidv4(),
+          name: "components",
+          isFolder: true,
+          parentId: "",
+          child: [
+            { id: uuidv4(), name: "images", isFolder: true, child: [
+              { id: uuidv4(), name: "ollyo", isFolder: true, child: [] },
+              { id: uuidv4(), name: "jakir vai", isFolder: true, child: [] },
+              { id: uuidv4(), name: "sajeeb vai", isFolder: true, child: [
+                { id: uuidv4(), name: "sifat vai", isFolder: true, child: [] }
+              ] }
+            ] },
+            { id: uuidv4(), name: "Home 1", isFolder: true, child: [] },
+            { id: uuidv4(), name: "Login", isFolder: true, child: [] },
+          ],
+        },
+        { id: uuidv4(), name: "App", isFolder: true, child: [] },
+        { id: uuidv4(), name: "index", isFolder: true, child: [] },
+        { id: uuidv4(), name: "data", isFolder: true, child: [] },
+      ],
+    },
+    {
+      id: uuidv4(),
+      name: "package.json",
+      isFolder: false,
+    },
+  ],
+};
 
 export const deletePropertyPath = (obj, path) => {
-
   if (!obj || !path) {
     return;
   }
 
-  if (typeof path === 'string') {
-    path = path.split('.');
+  if (typeof path === "string") {
+    path = path.split(".");
   }
 
   for (var i = 0; i < path.length - 1; i++) {
-
     obj = obj[path[i]];
 
-    if (typeof obj === 'undefined') {
+    if (typeof obj === "undefined") {
       return;
     }
   }
@@ -123,3 +171,43 @@ export const deletePropertyPath = (obj, path) => {
 //     child: []
 //   },
 // }
+
+/**
+ * Calculate file size by bytes in human readable format
+ * @param {Number} bytes
+ * @returns {String}
+ */
+export const getHumanFileSize = (bytes) => {
+  const e = (Math.log(bytes) / Math.log(1e3)) | 0;
+  return (
+    +(bytes / Math.pow(1e3, e)).toFixed(2) +
+    " " +
+    ("kMGTPEZY"[e - 1] || "") +
+    "B"
+  );
+};
+
+/**
+ * Calculate available actions for selected files, excluding non coincidences
+ * @param {Array<Object>} files
+ * @returns {Array<String>}
+ */
+export const getActionsByMultipleFiles = (files, acts = []) => {
+  files.forEach((file) => {
+    const fileActs = getActionsByFile(file);
+    // intersects previous actions with the following to leave only coincidences
+    acts = acts.length
+      ? acts.filter((value) => -1 !== fileActs.indexOf(value))
+      : fileActs;
+  });
+
+  if (files.length > 1) {
+    acts.splice(acts.indexOf("open"), acts.indexOf("open") >= 0);
+    acts.splice(acts.indexOf("edit"), acts.indexOf("edit") >= 0);
+    acts.splice(acts.indexOf("compress"), acts.indexOf("compress") >= 0);
+    acts.splice(acts.indexOf("download"), acts.indexOf("download") >= 0);
+    acts.splice(acts.indexOf("rename"), acts.indexOf("rename") >= 0);
+    acts.push("compress");
+  }
+  return acts;
+};
