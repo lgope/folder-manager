@@ -9,14 +9,74 @@ import InputBase from "@mui/material/InputBase";
 import MenuIcon from "@mui/icons-material/Menu";
 import SearchIcon from "@mui/icons-material/Search";
 
+import AbcOutlinedIcon from '@mui/icons-material/AbcOutlined';
+import AbcSharpIcon from '@mui/icons-material/AbcSharp';
+
+import Divider from '@mui/material/Divider';
+
+
+import DeleteIcon from "@mui/icons-material/Delete";
+import FilterAltIcon from "@mui/icons-material/FilterAlt";
+
+import CreateNewFolderOutlinedIcon from "@mui/icons-material/CreateNewFolderOutlined";
+import FilterAltOutlinedIcon from "@mui/icons-material/FilterAltOutlined";
+
+import NoteAddOutlinedIcon from '@mui/icons-material/NoteAddOutlined';
+
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import NewFolder from "../CreateFolder/NewFolder";
+import { Button } from "@mui/material";
+
+import { withStyles } from "@mui/styles";
 
 const options = ["Create Folder"];
 
 const ITEM_HEIGHT = 48;
+
+const StyledMenu = styled((props: MenuProps) => (
+  <Menu
+    elevation={0}
+    anchorOrigin={{
+      vertical: "bottom",
+      horizontal: "right",
+    }}
+    transformOrigin={{
+      vertical: "top",
+      horizontal: "right",
+    }}
+    {...props}
+  />
+))(({ theme }) => ({
+  "& .MuiPaper-root": {
+    borderRadius: 6,
+    marginTop: theme.spacing(1),
+    minWidth: 180,
+    color:
+      theme.palette.mode === "light"
+        ? "rgb(55, 65, 81)"
+        : theme.palette.grey[300],
+    boxShadow:
+      "rgb(255, 255, 255) 0px 0px 0px 0px, rgba(0, 0, 0, 0.05) 0px 0px 0px 1px, rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px",
+    "& .MuiMenu-list": {
+      padding: "4px 0",
+    },
+    "& .MuiMenuItem-root": {
+      "& .MuiSvgIcon-root": {
+        fontSize: 18,
+        color: theme.palette.text.secondary,
+        marginRight: theme.spacing(1.5),
+      },
+      "&:active": {
+        backgroundColor: alpha(
+          theme.palette.primary.main,
+          theme.palette.action.selectedOpacity
+        ),
+      },
+    },
+  },
+}));
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -120,35 +180,40 @@ const Navbar = ({ handleOnSearch }) => {
                 aria-controls={open ? "long-menu" : undefined}
                 aria-expanded={open ? "true" : undefined}
                 aria-haspopup="true"
+                color="inherit"
                 onClick={handleClick}
               >
                 <MoreVertIcon />
               </IconButton>
-              <Menu
-                id="long-menu"
+
+              <StyledMenu
+                id="demo-customized-menu"
                 MenuListProps={{
-                  "aria-labelledby": "long-button",
+                  "aria-labelledby": "demo-customized-button",
                 }}
                 anchorEl={anchorEl}
                 open={open}
                 onClose={handleClose}
-                PaperProps={{
-                  style: {
-                    maxHeight: ITEM_HEIGHT * 4.5,
-                    width: "20ch",
-                  },
-                }}
               >
-                {options.map((option) => (
-                  <MenuItem
-                    key={option}
-                    selected={option === "Pyxis"}
-                    onClick={handleOpenAddFolderDialog}
-                  >
-                    {option}
-                  </MenuItem>
-                ))}
-              </Menu>
+                <MenuItem onClick={handleOpenAddFolderDialog} disableRipple>
+                  <CreateNewFolderOutlinedIcon />
+                  Create Folder
+                </MenuItem>
+                <MenuItem onClick={handleClose} disableRipple>
+                  <NoteAddOutlinedIcon />
+                  Create File
+                </MenuItem>
+                {/* <Divider sx={{ my: 0.5 }} /> */}
+                <div className="separator"><FilterAltOutlinedIcon /> Filter</div>
+                <MenuItem onClick={handleClose} disableRipple>
+                  <AbcOutlinedIcon />
+                  Alphabetically
+                </MenuItem>
+                {/* <MenuItem onClick={handleClose} disableRipple>
+                  <FilterAltOutlinedIcon />
+                  More
+                </MenuItem> */}
+              </StyledMenu>
             </div>
           </Toolbar>
         </AppBar>

@@ -7,11 +7,11 @@ import { useDispatch } from "react-redux";
 
 import FileActions from "./FileActions";
 
-// import FolderIcon from "@mui/icons-material/Folder";
-// import InsertDriveFileIcon from "@mui/icons-material/InsertDriveFile";
+import FolderIcon from "@mui/icons-material/Folder";
+import InsertDriveFileIcon from "@mui/icons-material/InsertDriveFile";
 
-import FileImageIcon from "../../assets/images/file.png";
-import FolderImageIcon from "../../assets/images/folder.png";
+// import FileImageIcon from "../../assets/images/file.png";
+// import FolderImageIcon from "../../assets/images/folder.png";
 
 const File = ({ file, index }) => {
   const dispatch = useDispatch();
@@ -28,18 +28,25 @@ const File = ({ file, index }) => {
       onDoubleClick={handleClick}
     >
       <ListItem>
-        <ListItemAvatar>
+        {/* <ListItemAvatar> */}
           {/* <Avatar> */}
-          {/* {file.isFolder ? <FolderIcon /> : <InsertDriveFileIcon />} */}
-          {
+          <div className="folder-icon">
+          {file.isFolder ? <FolderIcon /> : <InsertDriveFileIcon />}
+
+          </div>
+          {/* {
             <img
               src={file.isFolder ? FolderImageIcon : FileImageIcon}
               alt={file.name}
             />
-          }
+          } */}
           {/* </Avatar> */}
-        </ListItemAvatar>
+        {/* </ListItemAvatar> */}
+        {/* <div className="file-name-text"> */}
+        {/* <br /> */}
         <ListItemText className="filename" primary={file.name} />
+
+        {/* </div> */}
 
         <FileActions file={file} />
       </ListItem>

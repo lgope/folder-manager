@@ -1,32 +1,41 @@
 .File {
-    cursor: pointer;
-    float: left;
-    display: block;
-    width: 100%;
-    user-select: none;
+  cursor: pointer;
+  float: left;
+  display: block;
+  width: 100%;
+  user-select: none;
 }
 
 .File img {
-    height: 35px;
-    width: auto;
+  height: 35px;
+  width: auto;
+}
+
+.File svg {
+  font-size: 70px;
+  color: #45caf1;
+}
+
+.folder-actions svg {
+  font-size: 20px;
+  color: #050506;
 }
 
 .File:hover {
-    cursor: pointer;
-    /* background: #fafafa; */
-    background: #d2eaf4;
+  cursor: pointer;
+  /* background: #fafafa; */
+  background: #d2eaf4;
 }
 
 .file-node:hover {
-    background: #f8f7ce;
+  background: #f8f7ce;
 }
 
-.File[data-selected=true] {
-    background-color: #e8f0fe;
-    
+.File[data-selected="true"] {
+  background-color: #e8f0fe;
 }
 
-.File[data-selected=true],
+.File[data-selected="true"],
 .File:hover > li > div > div {
-    color: #1967d2;
+  color: #1967d2;
 }

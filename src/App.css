@@ -192,6 +192,7 @@ span {
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
+  /* font-size: 0.8rem; */
 }
 
 @media (min-width : 600px) {
@@ -205,4 +206,31 @@ span {
       float: left;
       width: 25%;
   }
+}
+
+
+.separator {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  font-size: smaller;
+}
+
+.separator svg {
+  font-size: small;
+}
+
+.separator::before,
+.separator::after {
+  content: '';
+  flex: 1;
+  border-bottom: 1px solid #dcd9d9;
+}
+
+.separator:not(:empty)::before {
+  margin-right: .25em;
+}
+
+.separator:not(:empty)::after {
+  margin-left: .25em;
 }
