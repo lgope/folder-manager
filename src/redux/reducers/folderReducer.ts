@@ -118,6 +118,15 @@ export const folderReducer = createSlice({
           );
           break;
 
+          // TODO: Resolve sort by folder issue
+        case "folder":
+          sortedSubFolder = sortedSubFolder.toSorted((a, b) => a.name.localeCompare(b.name) - (a.isFolder ? -1 : 1));
+          break;
+
+        case "file":
+          sortedSubFolder = sortedSubFolder.toSorted((a, b) => a.isFolder ? 1 : -1);
+          break;
+
         default:
           break;
       }

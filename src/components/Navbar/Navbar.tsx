@@ -9,11 +9,13 @@ import InputBase from "@mui/material/InputBase";
 import MenuIcon from "@mui/icons-material/Menu";
 import SearchIcon from "@mui/icons-material/Search";
 
-import AbcOutlinedIcon from '@mui/icons-material/AbcOutlined';
-import AbcSharpIcon from '@mui/icons-material/AbcSharp';
+import FolderOutlinedIcon from "@mui/icons-material/FolderOutlined";
+import InsertDriveFileIcon from "@mui/icons-material/InsertDriveFile";
 
-import Divider from '@mui/material/Divider';
+import AbcOutlinedIcon from "@mui/icons-material/AbcOutlined";
+import AbcSharpIcon from "@mui/icons-material/AbcSharp";
 
+import Divider from "@mui/material/Divider";
 
 import DeleteIcon from "@mui/icons-material/Delete";
 import FilterAltIcon from "@mui/icons-material/FilterAlt";
@@ -21,7 +23,7 @@ import FilterAltIcon from "@mui/icons-material/FilterAlt";
 import CreateNewFolderOutlinedIcon from "@mui/icons-material/CreateNewFolderOutlined";
 import FilterAltOutlinedIcon from "@mui/icons-material/FilterAltOutlined";
 
-import NoteAddOutlinedIcon from '@mui/icons-material/NoteAddOutlined';
+import NoteAddOutlinedIcon from "@mui/icons-material/NoteAddOutlined";
 
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
@@ -30,7 +32,6 @@ import NewFolder from "../CreateFolder/NewFolder";
 
 import { useDispatch } from "react-redux";
 import { updateSubFolderOnSorting } from "../../redux/actions/folderAction";
-
 
 const StyledMenu = styled((props: MenuProps) => (
   <Menu
@@ -141,7 +142,7 @@ const Navbar = ({ handleOnSearch }) => {
   const handleAlphabeticallySort = (sortBy: string) => {
     setAnchorEl(null);
     dispatch(updateSubFolderOnSorting(sortBy));
-  }
+  };
 
   return (
     <Fragment>
@@ -207,10 +208,29 @@ const Navbar = ({ handleOnSearch }) => {
                   Create File
                 </MenuItem>
                 {/* <Divider sx={{ my: 0.5 }} /> */}
-                <div className="separator"><FilterAltOutlinedIcon /> Filter</div>
-                <MenuItem onClick={() => handleAlphabeticallySort("alphabetically")} disableRipple>
+                <div className="separator">
+                  <FilterAltOutlinedIcon /> Filter
+                </div>
+                <MenuItem
+                  onClick={() => handleAlphabeticallySort("alphabetically")}
+                  disableRipple
+                >
                   <AbcOutlinedIcon />
                   Alphabetically
+                </MenuItem>
+                <MenuItem
+                  onClick={() => handleAlphabeticallySort("folder")}
+                  disableRipple
+                >
+                  <FolderOutlinedIcon />
+                  Folder
+                </MenuItem>
+                <MenuItem
+                  onClick={() => handleAlphabeticallySort("file")}
+                  disableRipple
+                >
+                  <InsertDriveFileIcon />
+                  File
                 </MenuItem>
                 {/* <MenuItem onClick={handleClose} disableRipple>
                   <FilterAltOutlinedIcon />
