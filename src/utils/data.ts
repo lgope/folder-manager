@@ -131,7 +131,7 @@ export const folderTree = {
     {
       id: 1.1,
       name: "public",
-      parentId: 1,
+      parentId: "root",
       isFolder: true,
       child: [
         {
@@ -146,7 +146,7 @@ export const folderTree = {
     {
       id: 2,
       name: "src",
-      parentId: 1,
+      parentId: "root",
       isFolder: true,
       child: [
         {
@@ -183,9 +183,33 @@ export const folderTree = {
     },
     {
       id: uuidv4(),
-      parentId: 1,
+      parentId: "root",
       name: "package.json",
       isFolder: false,
+    },
+    {
+      id: uuidv4(),
+      parentId: "root",
+      name: "Bangladesh",
+      isFolder: true,
+    },
+    {
+      id: uuidv4(),
+      parentId: "root",
+      name: "Dubai",
+      isFolder: true,
+    },
+    {
+      id: uuidv4(),
+      parentId: "root",
+      name: "Canada",
+      isFolder: true,
+    },
+    {
+      id: uuidv4(),
+      parentId: "root",
+      name: "America",
+      isFolder: true,
     },
   ],
 };

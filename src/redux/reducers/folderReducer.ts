@@ -1,5 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { deleteNode, insertNodes } from "../../utils/traverseTree";
+import {
+  deleteNode,
+  insertNodes,
+  updateNodeOnSort,
+  updatePathTree,
+} from "../../utils/traverseTree";
 
 export const folderReducer = createSlice({
   name: "folder",
@@ -24,21 +29,9 @@ export const folderReducer = createSlice({
       updatedSubFolder.push(newFolderData);
 
       if (newFolderData.parentId !== "root") {
-        // update path tree last index data
-        const updatedPathTree = [...state.pathTree];
+        const newPathTree = updatePathTree(updateFolderTree, state.path);
 
-        // update path tree prev last index child data on adding new folder
-        if (updatedPathTree.length >= 2) {
-
-          const path = state.path;
-
-          const pathLastIndex = path[path.length - 1].index;
-          const pathTreePrevLastIndex = updatedPathTree.length - 2;
-          updatedPathTree[pathTreePrevLastIndex][pathLastIndex].child = updatedSubFolder;
-        }
-
-        updatedPathTree[updatedPathTree.length - 1] = updatedSubFolder;
-        state.pathTree = updatedPathTree;
+        state.pathTree = newPathTree;
       }
 
       state.data = updateFolderTree;
@@ -57,26 +50,14 @@ export const folderReducer = createSlice({
         (folder) => folder.id !== fileId
       );
 
-      // update path tree last index data
-      const updatedPathTree = state.pathTree;
+      // update path tree
+      const newPathTree = updatePathTree(updatedFolderTree, state.path);
 
-      // update path tree prev last index child data on adding new folder
-      if (updatedPathTree.length >= 2) {
-
-        const path = state.path;
-
-        const pathLastIndex = path[path.length - 1].index;
-        const pathTreePrevLastIndex = updatedPathTree.length - 2;
-        updatedPathTree[pathTreePrevLastIndex][pathLastIndex].child = updateSubFolder;
-      }
-
-      updatedPathTree[updatedPathTree.length - 1] = [updateSubFolder];
+      state.pathTree = newPathTree;
 
       state.data = updatedFolderTree;
 
       state.subFolder = updateSubFolder;
-
-      state.pathTree = updatedPathTree;
 
       state.isLoading = false;
     },
@@ -114,8 +95,6 @@ export const folderReducer = createSlice({
 
         state.path = [];
       } else {
-        const updatedSubFolder = state.subFolder;
-
         const updatedPathTree = state.pathTree;
 
         const updatedPath = state.path;
@@ -127,6 +106,38 @@ export const folderReducer = createSlice({
         state.path = updatedPath.slice(0, pathIndex + 1);
       }
     },
+
+    sortSubFolder: (state, action) => {
+      const sortBy = action.payload;
+
+      let sortedSubFolder = state.subFolder || [];
+
+      switch (sortBy) {
+        case "alphabetically":
+          sortedSubFolder = sortedSubFolder.toSorted((a, b) =>
+            a.name.localeCompare(b.name)
+          );
+          break;
+
+        default:
+          break;
+      }
+
+      const updatedRoot = updateNodeOnSort(
+        state.data,
+        sortedSubFolder[0].parentId,
+        sortedSubFolder
+      );
+
+      // update path tree
+      const newPathTree = updatePathTree(updatedRoot, state.path);
+
+      state.pathTree = newPathTree;
+
+      state.data = updatedRoot;
+      state.subFolder = sortedSubFolder;
+      state.isLoading = false;
+    },
   },
 });
 
@@ -136,6 +147,7 @@ export const {
   removeFolder,
   updateSubFolderData,
   updateBreadCrumbTree,
+  sortSubFolder,
 } = folderReducer.actions;
 
 // export const selectFolders = (state: { folder: [], isLoading: boolean }) => state.folder;

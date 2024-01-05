@@ -32,3 +32,28 @@ export const deleteNode = (tree, id) => {
   return tree;
 };
 
+export const updateNodeOnSort = (tree, parentId, child) => {
+  if (tree.id === parentId) {
+    return { ...tree, child: [...child] };
+  }
+
+  const latestNode = tree?.child?.map((item) => {
+    return updateNodeOnSort(item, parentId, child);
+  });
+
+  return { ...tree, child: latestNode };
+};
+
+export const updatePathTree = (tree, pathArr = []) => {
+  let folderTree = tree.child;
+
+  const pathTree = pathArr.reduce((acc, curr) => {
+    folderTree = folderTree[curr.index].child;
+
+    acc.push(folderTree);
+
+    return acc;
+  }, []);
+
+  return pathTree;
+};

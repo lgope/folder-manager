@@ -2,6 +2,7 @@ import {
   getFolderRoot,
   newFolder,
   removeFolder,
+  sortSubFolder,
   updateBreadCrumbTree,
   updateSubFolderData,
 } from "../reducers/folderReducer";
@@ -29,3 +30,7 @@ export const deleteFolder = (id) => (dispatch: Dispatch) => {
 export const updateBreadCrumb = (pathIndex: number | string) => (dispatch: Dispatch) => {
   dispatch(updateBreadCrumbTree(pathIndex));
 };
+
+export const updateSubFolderOnSorting = (sortBy: string) => (dispatch: Dispatch) => {
+  dispatch(sortSubFolder(sortBy));
+}

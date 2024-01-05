@@ -27,13 +27,10 @@ import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import NewFolder from "../CreateFolder/NewFolder";
-import { Button } from "@mui/material";
 
-import { withStyles } from "@mui/styles";
+import { useDispatch } from "react-redux";
+import { updateSubFolderOnSorting } from "../../redux/actions/folderAction";
 
-const options = ["Create Folder"];
-
-const ITEM_HEIGHT = 48;
 
 const StyledMenu = styled((props: MenuProps) => (
   <Menu
@@ -124,6 +121,7 @@ const Navbar = ({ handleOnSearch }) => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
   const [openNewFolderDialog, setOpenNewFolderDialog] = useState(false);
+  const dispatch = useDispatch();
 
   const open = Boolean(anchorEl);
 
@@ -139,6 +137,11 @@ const Navbar = ({ handleOnSearch }) => {
     setAnchorEl(null);
     setOpenNewFolderDialog(true);
   };
+
+  const handleAlphabeticallySort = (sortBy: string) => {
+    setAnchorEl(null);
+    dispatch(updateSubFolderOnSorting(sortBy));
+  }
 
   return (
     <Fragment>
@@ -205,7 +208,7 @@ const Navbar = ({ handleOnSearch }) => {
                 </MenuItem>
                 {/* <Divider sx={{ my: 0.5 }} /> */}
                 <div className="separator"><FilterAltOutlinedIcon /> Filter</div>
-                <MenuItem onClick={handleClose} disableRipple>
+                <MenuItem onClick={() => handleAlphabeticallySort("alphabetically")} disableRipple>
                   <AbcOutlinedIcon />
                   Alphabetically
                 </MenuItem>
