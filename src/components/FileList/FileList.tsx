@@ -1,16 +1,10 @@
 import File from "../File/File";
 import FileListEmptyMessage from "./FileListEmptyMessage";
-import Loader from "../Loader/Loader";
 import "./FileList.css";
 
 const FileList = ({ fileList = [] }) => {
-  const fileListComponent = fileList.map((file, key) => {
-    return (
-      <File
-      file={file}
-        key={file.id}
-      />
-    );
+  const fileListComponent = fileList.map((file, idx) => {
+    return <File file={file} key={file.id} index={idx} />;
   });
 
   return (

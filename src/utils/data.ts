@@ -123,7 +123,7 @@ const folderTreeDemoData = {
 };
 
 export const folderTree = {
-  id: 1,
+  id: 'root',
   name: "root",
   isFolder: true,
   parentId: "",

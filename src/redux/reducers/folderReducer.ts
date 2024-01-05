@@ -1,7 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { deleteNode, insertNodes } from "../../utils/treeNode";
-
-// TODO: update path tree data with child on add, delete and update folder
+import { deleteNode, insertNodes } from "../../utils/traverseTree";
 
 export const folderReducer = createSlice({
   name: "folder",
@@ -25,13 +23,26 @@ export const folderReducer = createSlice({
       const updatedSubFolder = state.subFolder;
       updatedSubFolder.push(newFolderData);
 
-      // update path tree last index data
-      const updatedPathTree = [...state.pathTree];
-      updatedPathTree[updatedPathTree.length - 1] = updatedSubFolder;
+      if (newFolderData.parentId !== "root") {
+        // update path tree last index data
+        const updatedPathTree = [...state.pathTree];
+
+        // update path tree prev last index child data on adding new folder
+        if (updatedPathTree.length >= 2) {
+
+          const path = state.path;
+
+          const pathLastIndex = path[path.length - 1].index;
+          const pathTreePrevLastIndex = updatedPathTree.length - 2;
+          updatedPathTree[pathTreePrevLastIndex][pathLastIndex].child = updatedSubFolder;
+        }
+
+        updatedPathTree[updatedPathTree.length - 1] = updatedSubFolder;
+        state.pathTree = updatedPathTree;
+      }
 
       state.data = updateFolderTree;
       state.subFolder = updatedSubFolder;
-      state.pathTree = updatedPathTree;
 
       state.isLoading = false;
     },
@@ -48,6 +59,16 @@ export const folderReducer = createSlice({
 
       // update path tree last index data
       const updatedPathTree = state.pathTree;
+
+      // update path tree prev last index child data on adding new folder
+      if (updatedPathTree.length >= 2) {
+
+        const path = state.path;
+
+        const pathLastIndex = path[path.length - 1].index;
+        const pathTreePrevLastIndex = updatedPathTree.length - 2;
+        updatedPathTree[pathTreePrevLastIndex][pathLastIndex].child = updateSubFolder;
+      }
 
       updatedPathTree[updatedPathTree.length - 1] = [updateSubFolder];
 
@@ -72,10 +93,8 @@ export const folderReducer = createSlice({
 
       const file = action.payload;
 
-      console.log(file);
-
       // add new path
-      updatedPath.push({ id: file.id, name: file.name });
+      updatedPath.push({ id: file.id, name: file.name, index: file.index });
 
       // add child to path tree as array item
       updatedPathTree.push(file.child);
@@ -87,8 +106,6 @@ export const folderReducer = createSlice({
 
     updateBreadCrumbTree: (state, action) => {
       const pathIndex = action.payload;
-
-      // console.log({pathIndex})
 
       if (pathIndex === "home") {
         state.subFolder = state.data.child;

@@ -28,7 +28,7 @@ export default function FormDialog({
     event.stopPropagation();
 
     if (name) {
-      const parentFolderId = folderData.path[folderData.path.length - 1].id;
+      const parentFolderId = folderData.path.length ? folderData.path[folderData.path.length - 1].id : 'root';
 
       const newFolder = {
         id: uuidv4(),
