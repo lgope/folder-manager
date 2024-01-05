@@ -5,6 +5,7 @@ import {
   updateNodeColor,
   updateNodeOnSort,
   updatePathTree,
+  updateSubFolderTree,
 } from "../../utils/traverseTree";
 
 export const folderReducer = createSlice({
@@ -46,19 +47,16 @@ export const folderReducer = createSlice({
 
       const updatedFolderTree = deleteNode(state.data, fileId);
 
-      let updateSubFolder = state.subFolder;
-      updateSubFolder = updateSubFolder.filter(
-        (folder) => folder.id !== fileId
-      );
-
       // update path tree
       const newPathTree = updatePathTree(updatedFolderTree, state.path);
-
-      state.pathTree = newPathTree;
+      const updatedSubFolder = updateSubFolderTree(
+        updatedFolderTree,
+        state.path
+      );
 
       state.data = updatedFolderTree;
-
-      state.subFolder = updateSubFolder;
+      state.subFolder = updatedSubFolder;
+      state.pathTree = newPathTree;
 
       state.isLoading = false;
     },
@@ -140,19 +138,20 @@ export const folderReducer = createSlice({
       state.isLoading = false;
     },
 
+    updateFolderColor: (state, action) => {
+      const { id, color } = action.payload;
 
-  updateFolderColor: (state, action) => {
-    const { id, color } = action.payload;
+      const updatedRoot = updateNodeColor(state.data, id, color);
+      const updatedSubFolder = updateSubFolderTree(updatedRoot, state.path);
+      const newPathTree = updatePathTree(updatedRoot, state.path);
 
-    console.log({id, color})
+      state.data = updatedRoot;
+      state.subFolder = updatedSubFolder;
+      state.pathTree = newPathTree;
 
-    const updatedRoot = updateNodeColor(state.data, id, color);
-    state.data = updatedRoot;
-
-    state.isLoading = false;
+      state.isLoading = false;
+    },
   },
-  },
-
 });
 
 export const {

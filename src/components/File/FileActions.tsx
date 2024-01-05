@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-
 import IconButton from "@mui/material/IconButton";
 
 import Menu from "@mui/material/Menu";
@@ -14,12 +13,12 @@ import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import DeleteFolder from "../DeleteFolder";
 
 import ColorLensIcon from "@mui/icons-material/ColorLens";
-import { debounce } from "../../utils/data";
-import { useDispatch } from "react-redux";
-import { updateFolderColor } from "../../redux/reducers/folderReducer";
-import { updateFolderColorOnChange } from "../../redux/actions/folderAction";
 
-// const options = ["Rename", "Delete"];
+import { useDispatch } from "react-redux";
+
+import { updateFolderColorOnChange } from "../../redux/actions/folderAction";
+import { debounce } from "../../utils/data";
+
 
 const ITEM_HEIGHT = 48;
 
@@ -45,22 +44,12 @@ const FileActions = ({ file }) => {
     setAnchorEl(null);
   };
 
-  const handleOnColorChange = debounce((e) => {
+  const handleOnColorChange = debounce((e, value) => {
     e.stopPropagation();
-    const value = e.target.value;
-
-    // console.log(value);
     setColor(value);
+    dispatch(updateFolderColorOnChange(file.id, value));
+  }, 200);
 
-
-    console.log(color);
-  }, 150);
-
-  const handleColorClick = () => {
-    // if (file.color !== color) {
-    //   dispatch(updateFolderColorOnChange(file.id, color));
-    // }
-  };
 
   return (
     <div className="folder-actions">
@@ -104,7 +93,7 @@ const FileActions = ({ file }) => {
           <ListItemText>Delete</ListItemText>
         </MenuItem>
 
-        <MenuItem onClick={handleColorClick}>
+        <MenuItem>
           <ListItemIcon>
             <ColorLensIcon fontSize="small" />
           </ListItemIcon>
@@ -114,8 +103,9 @@ const FileActions = ({ file }) => {
               type="color"
               id="favcolor"
               name="favcolor"
+              // value={file.color}
               value={color}
-              onChange={handleOnColorChange}
+              onChange={e => handleOnColorChange(e, e.target.value)}
             />
           </ListItemText>
         </MenuItem>

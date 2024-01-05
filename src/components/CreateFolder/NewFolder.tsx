@@ -34,6 +34,7 @@ export default function FormDialog({
         id: uuidv4(),
         name,
         isFolder: true,
+        color: "#45caf1",
         parentId: parentFolderId,
         child: [],
       };

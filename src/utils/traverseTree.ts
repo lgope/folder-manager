@@ -69,3 +69,18 @@ export const updateNodeColor = (tree, id, color) => {
 
   return { ...tree, child: latestNode };
 };
+
+export const updateSubFolderTree = (tree, pathArr) => {
+  let folderTree = tree.child;
+
+  if (!pathArr.length) return folderTree;
+
+  const pathTree = pathArr.reduce((acc, curr) => {
+    folderTree = folderTree[curr.index].child;
+
+    acc = folderTree;
+    return acc;
+  }, []);
+
+  return pathTree;
+};
