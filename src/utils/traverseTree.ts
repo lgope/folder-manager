@@ -57,3 +57,15 @@ export const updatePathTree = (tree, pathArr = []) => {
 
   return pathTree;
 };
+
+export const updateNodeColor = (tree, id, color) => {
+  if (tree.id === id) {
+    return { ...tree, color };
+  }
+
+  const latestNode = tree?.child?.map((item) => {
+    return updateNodeColor(item, id, color);
+  });
+
+  return { ...tree, child: latestNode };
+};

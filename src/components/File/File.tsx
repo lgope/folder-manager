@@ -31,7 +31,7 @@ const File = ({ file, index }) => {
         {/* <ListItemAvatar> */}
           {/* <Avatar> */}
           <div className="folder-icon">
-          {file.isFolder ? <FolderIcon /> : <InsertDriveFileIcon />}
+          {file.isFolder ? <FolderIcon style={{color: file.color}} /> : <InsertDriveFileIcon style={{color: file.color}} />}
 
           </div>
           {/* {

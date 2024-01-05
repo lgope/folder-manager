@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import {
   deleteNode,
   insertNodes,
+  updateNodeColor,
   updateNodeOnSort,
   updatePathTree,
 } from "../../utils/traverseTree";
@@ -138,7 +139,20 @@ export const folderReducer = createSlice({
       state.subFolder = sortedSubFolder;
       state.isLoading = false;
     },
+
+
+  updateFolderColor: (state, action) => {
+    const { id, color } = action.payload;
+
+    console.log({id, color})
+
+    const updatedRoot = updateNodeColor(state.data, id, color);
+    state.data = updatedRoot;
+
+    state.isLoading = false;
   },
+  },
+
 });
 
 export const {
@@ -148,6 +162,7 @@ export const {
   updateSubFolderData,
   updateBreadCrumbTree,
   sortSubFolder,
+  updateFolderColor,
 } = folderReducer.actions;
 
 // export const selectFolders = (state: { folder: [], isLoading: boolean }) => state.folder;

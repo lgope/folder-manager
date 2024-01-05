@@ -96,6 +96,7 @@ const folderTreeDemoData = {
   name: "root",
   isFolder: true,
   parentId: "",
+  color: "#45caf1",
   child: [
     {
       id: 1.1,
@@ -127,18 +128,21 @@ export const folderTree = {
   name: "root",
   isFolder: true,
   parentId: "",
+  color: "#45caf1",
   child: [
     {
       id: 1.1,
       name: "public",
       parentId: "root",
       isFolder: true,
+      color: "#45caf1",
       child: [
         {
           id: 545454,
           name: "index",
           parentId: 1.1,
           isFolder: true,
+          color: "#45caf1",
           child: [],
         },
       ],
@@ -148,24 +152,28 @@ export const folderTree = {
       name: "src",
       parentId: "root",
       isFolder: true,
+      color: "#45caf1",
       child: [
         {
           id: 3,
           name: "components",
           isFolder: true,
           parentId: 2.1,
+          color: "#45caf1",
           child: [
             {
               id: 4,
               name: "images",
               parentId: 3,
               isFolder: true,
+              color: "#45caf1",
               child: [
                 {
                   id: 22222,
                   name: "ollyo",
                   isFolder: true,
                   parentId: 4,
+                  color: "#45caf1",
                   child: [],
                 },
                 {
@@ -173,6 +181,7 @@ export const folderTree = {
                   name: "jakir vai",
                   isFolder: true,
                   parentId: 4,
+                  color: "#45caf1",
                   child: [],
                 },
               ],
@@ -185,31 +194,40 @@ export const folderTree = {
       id: uuidv4(),
       parentId: "root",
       name: "package.json",
+      color: "#cad444",
       isFolder: false,
     },
     {
       id: uuidv4(),
       parentId: "root",
       name: "Bangladesh",
+      color: "#45caf1",
       isFolder: true,
+      child: [],
     },
     {
       id: uuidv4(),
       parentId: "root",
       name: "Dubai",
+      color: "#45caf1",
       isFolder: true,
+      child: [],
     },
     {
       id: uuidv4(),
       parentId: "root",
       name: "Canada",
+      color: "#45caf1",
       isFolder: true,
+      child: [],
     },
     {
       id: uuidv4(),
       parentId: "root",
       name: "America",
+      color: "#45caf1",
       isFolder: true,
+      child: [],
     },
   ],
 };
@@ -270,3 +288,18 @@ export const getHumanFileSize = (bytes) => {
     "B"
   );
 };
+
+
+export const debounce = <T extends (...args: any[]) => ReturnType<T>>(
+  callback: T,
+  timeout: number
+): ((...args: Parameters<T>) => void) => {
+  let timer: ReturnType<typeof setTimeout>
+
+  return (...args: Parameters<T>) => {
+    clearTimeout(timer)
+    timer = setTimeout(() => {
+      callback(...args)
+    }, timeout)
+  }
+}

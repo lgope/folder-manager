@@ -4,6 +4,7 @@ import {
   removeFolder,
   sortSubFolder,
   updateBreadCrumbTree,
+  updateFolderColor,
   updateSubFolderData,
 } from "../reducers/folderReducer";
 
@@ -33,4 +34,8 @@ export const updateBreadCrumb = (pathIndex: number | string) => (dispatch: Dispa
 
 export const updateSubFolderOnSorting = (sortBy: string) => (dispatch: Dispatch) => {
   dispatch(sortSubFolder(sortBy));
+}
+
+export const updateFolderColorOnChange = (id, color) => (dispatch: Dispatch) => {
+  dispatch(updateFolderColor({id, color}));
 }
