@@ -19,7 +19,7 @@
   visibility: hidden;
 }
 
-.File:hover .folder-actions {
+.folder-panel:hover .folder-actions {
   visibility: visible;
 }
 
@@ -138,7 +138,7 @@ span {
 .delete-action {
   position: absolute;
   top: -4px;
-    right: 8px;
+  right: 8px;
 }
 
 .delete-action i {
@@ -183,31 +183,29 @@ span {
   margin-bottom: 20px;
 }
 
-
 .FileList {
-  overflow: auto
+  overflow: auto;
 }
 
-.FileList .File .filename > span {
+.FileList .folder-panel .filename > span {
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
   /* font-size: 0.8rem; */
 }
 
-@media (min-width : 600px) {
-  .FileList .File {
-      float: left;
-      width: 33.3%;
+@media (min-width: 600px) {
+  .FileList .folder-panel {
+    float: left;
+    width: 33.3%;
   }
 }
-@media (min-width : 1024px) {
-  .FileList .File {
-      float: left;
-      width: 25%;
+@media (min-width: 1024px) {
+  .FileList .folder-panel {
+    float: left;
+    width: 25%;
   }
 }
-
 
 .separator {
   display: flex;
@@ -222,15 +220,67 @@ span {
 
 .separator::before,
 .separator::after {
-  content: '';
+  content: "";
   flex: 1;
   border-bottom: 1px solid #dcd9d9;
 }
 
 .separator:not(:empty)::before {
-  margin-right: .25em;
+  margin-right: 0.25em;
 }
 
 .separator:not(:empty)::after {
-  margin-left: .25em;
+  margin-left: 0.25em;
+}
+
+/* new file style */
+.files-panel {
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  grid-gap: 1rem;
+  padding: 32px;
+  font-family: "Lato", sans-serif;
+}
+.files-panel__item {
+  color: #000;
+  border: none;
+  justify-self: center;
+  align-self: center;
+  text-align: center;
+  border-radius: 5px;
+}
+.files-panel__item .btn {
+  padding: 16px;
+  display: block;
+  height: 100%;
+}
+.files-panel__item-extension {
+  position: relative;
+  display: inline-block;
+}
+.files-panel__item-extension-name {
+  position: absolute;
+  bottom: 10px;
+  font-size: 19px;
+  left: 20px;
+  color: #fff;
+}
+.files-panel__item-title {
+  color: #535b62;
+  margin: 16px/2 0;
+  font-size: 12px;
+}
+.files-panel__item.folder {
+  align-self: stretch;
+  display: grid;
+  align-items: center;
+}
+.files-panel__item.folder p {
+  align-self: end;
+}
+.files-panel__item.folder:hover {
+  background: rgba(0, 196, 255, 0.1215686275);
+}
+.files-panel__item.file:hover {
+  background: rgba(255, 224, 0, 0.3490196078);
 }

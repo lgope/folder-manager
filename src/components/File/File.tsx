@@ -18,38 +18,27 @@ const File = ({ file, index }) => {
 
   const handleClick = () => {
     if (file.isFolder) {
-      dispatch(updateSubFolder({...file, index}));
+      dispatch(updateSubFolder({ ...file, index }));
     }
   };
 
   return (
     <div
-      className={`File ${!file.isFolder ? "file-node" : ""}`}
+      style={{ position: "static" }} // Setting position according to the modal state
+      className={`folder-panel files-panel__item folder ${
+        file.isFolder ? "folder" : "file"
+      } `}
       onDoubleClick={handleClick}
     >
-      <ListItem>
-        {/* <ListItemAvatar> */}
-          {/* <Avatar> */}
-          <div className="folder-icon">
-          {file.isFolder ? <FolderIcon style={{color: file.color}} /> : <InsertDriveFileIcon style={{color: file.color}} />}
+      <div className="folder-icon">
+        {file.isFolder ? (
+          <FolderIcon style={{ color: file.color }} />
+        ) : (
+          <InsertDriveFileIcon style={{ color: file.color }} />
+        )}
 
-          </div>
-          {/* {
-            <img
-              src={file.isFolder ? FolderImageIcon : FileImageIcon}
-              alt={file.name}
-            />
-          } */}
-          {/* </Avatar> */}
-        {/* </ListItemAvatar> */}
-        {/* <div className="file-name-text"> */}
-        {/* <br /> */}
-        <ListItemText className="filename" primary={file.name} />
-
-        {/* </div> */}
-
-        <FileActions file={file} />
-      </ListItem>
+        <p className="files-panel__item-title">{file.name}</p>
+      </div>
     </div>
   );
 };

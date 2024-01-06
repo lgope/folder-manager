@@ -1,4 +1,4 @@
-.File {
+.folder-panel {
   cursor: pointer;
   float: left;
   display: block;
@@ -6,13 +6,13 @@
   user-select: none;
 }
 
-.File img {
+.folder-panel img {
   height: 35px;
   width: auto;
 }
 
-.File svg {
-  font-size: 70px;
+.folder-panel svg {
+  font-size: 80px;
 }
 
 .folder-actions svg {
@@ -20,9 +20,8 @@
   color: #050506;
 }
 
-.File:hover {
+.folder-panel:hover {
   cursor: pointer;
-  /* background: #fafafa; */
   background: #d2eaf4;
 }
 
@@ -30,11 +29,11 @@
   background: #f8f7ce;
 }
 
-.File[data-selected="true"] {
+.folder-panel[data-selected="true"] {
   background-color: #e8f0fe;
 }
 
-.File[data-selected="true"],
-.File:hover > li > div > div {
+.folder-panel[data-selected="true"],
+.folder-panel:hover > li > div > div {
   color: #1967d2;
 }

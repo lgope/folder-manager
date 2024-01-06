@@ -1,22 +1,22 @@
 .FileList {
-    overflow: auto
+  overflow: auto;
 }
 
-.FileList .File .filename > span {
-    text-overflow: ellipsis;
-    overflow: hidden;
-    white-space: nowrap;
+.FileList .folder-panel .filename > span {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
 }
 
-@media (min-width : 600px) {
-    .FileList .File {
-        float: left;
-        width: 33.3%;
-    }
+@media (min-width: 600px) {
+  .FileList .folder-panel {
+    float: left;
+    width: 33.3%;
+  }
 }
-@media (min-width : 1024px) {
-    .FileList .File {
-        float: left;
-        width: 25%;
-    }
+@media (min-width: 1024px) {
+  .FileList .folder-panel {
+    float: left;
+    width: 25%;
+  }
 }

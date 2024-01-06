@@ -8,9 +8,13 @@ const FileList = ({ fileList = [] }) => {
   });
 
   return (
-    <div className="FileList">
-      {fileListComponent.length ? fileListComponent : <FileListEmptyMessage />}
-    </div>
+    <>
+      {fileListComponent.length ? (
+        <div className="files-panel"> {fileListComponent} </div>
+      ) : (
+        <FileListEmptyMessage />
+      )}
+    </>
   );
 };
 
