@@ -1,20 +1,37 @@
-import "./File.css";
-
-import { ListItem, ListItemAvatar, ListItemText } from "@mui/material";
+import { useState } from "react";
 
 import { updateSubFolder } from "../../redux/actions/folderAction";
 import { useDispatch } from "react-redux";
-
 import FileActions from "./FileActions";
 
 import FolderIcon from "@mui/icons-material/Folder";
 import InsertDriveFileIcon from "@mui/icons-material/InsertDriveFile";
 
-// import FileImageIcon from "../../assets/images/file.png";
-// import FolderImageIcon from "../../assets/images/folder.png";
+import "./File.css";
+
 
 const File = ({ file, index }) => {
+  const [contextMenu, setContextMenu] = useState<{
+    mouseX: number;
+    mouseY: number;
+  } | null>(null);
   const dispatch = useDispatch();
+
+  const handleContextMenu = (event: React.MouseEvent) => {
+    event.preventDefault();
+    setContextMenu(
+      contextMenu === null
+        ? {
+            mouseX: event.clientX + 2,
+            mouseY: event.clientY - 6,
+          }
+        : null
+    );
+  };
+
+  const handleClose = () => {
+    setContextMenu(null);
+  };
 
   const handleClick = () => {
     if (file.isFolder) {
@@ -24,11 +41,15 @@ const File = ({ file, index }) => {
 
   return (
     <div
-      style={{ position: "static" }} // Setting position according to the modal state
+      style={{
+        position: contextMenu ? "relative" : "static",
+        cursor: "context-menu",
+      }} // Setting position according to the modal state
       className={`folder-panel files-panel__item folder ${
-        file.isFolder ? "folder" : "file"
-      } `}
+        contextMenu !== null ? "folder-active" : ""
+      }`}
       onDoubleClick={handleClick}
+      onContextMenu={handleContextMenu}
     >
       <div className="folder-icon">
         {file.isFolder ? (
@@ -39,6 +60,13 @@ const File = ({ file, index }) => {
 
         <p className="files-panel__item-title">{file.name}</p>
       </div>
+
+      <FileActions
+        file={file}
+        contextMenu={contextMenu}
+        handleClose={handleClose}
+        handleOpenFolder={handleClick}
+      />
     </div>
   );
 };

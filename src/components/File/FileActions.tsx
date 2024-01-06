@@ -1,125 +1,61 @@
 import React, { useState } from "react";
-import IconButton from "@mui/material/IconButton";
 
-import Menu from "@mui/material/Menu";
-import MenuItem from "@mui/material/MenuItem";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
-
-import ListItemText from "@mui/material/ListItemText";
-import ListItemIcon from "@mui/material/ListItemIcon";
-
-// import DriveFileRenameOutlineIcon from '@mui/icons-material/DriveFileRenameOutline';
-import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
-import DeleteFolder from "../DeleteFolder";
-
-import ColorLensIcon from "@mui/icons-material/ColorLens";
+import {
+  Menu,
+  MenuItem,
+  Typography,
+} from "@mui/material";
 
 import { useDispatch } from "react-redux";
 
 import { updateFolderColorOnChange } from "../../redux/actions/folderAction";
 import { debounce } from "../../utils/data";
 
-
-const ITEM_HEIGHT = 48;
-
-const FileActions = ({ file }) => {
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+const FileActions = ({ file, contextMenu, handleClose, handleOpenFolder }) => {
   const [openConfirmationDialog, setOpenConfirmationDialog] = useState(false);
-  const open = Boolean(anchorEl);
-
-  const [color, setColor] = useState(file.color);
 
   const dispatch = useDispatch();
 
-  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
-    event.stopPropagation();
-    setAnchorEl(event.currentTarget);
-  };
-  const handleClose = (e) => {
-    setAnchorEl(null);
-  };
 
   const handleDeleteClick = () => {
     setOpenConfirmationDialog(true);
-    setAnchorEl(null);
+    // setAnchorEl(null);
   };
 
   const handleOnColorChange = debounce((e, value) => {
     e.stopPropagation();
-    setColor(value);
+    // setColor(value);
     dispatch(updateFolderColorOnChange(file.id, value));
   }, 200);
 
-
   return (
-    <div className="folder-actions">
-      <IconButton
-        aria-label="more"
-        id="long-button"
-        aria-controls={open ? "long-menu" : undefined}
-        aria-expanded={open ? "true" : undefined}
-        aria-haspopup="true"
-        onClick={handleClick}
-      >
-        <MoreVertIcon />
-      </IconButton>
-      <Menu
-        id="long-menu"
-        MenuListProps={{
-          "aria-labelledby": "long-button",
-        }}
-        anchorEl={anchorEl}
-        open={open}
-        onClose={handleClose}
-        PaperProps={{
-          style: {
-            maxHeight: ITEM_HEIGHT * 4.5,
-            width: "20ch",
-            fontSize: "0.8rem",
-          },
-        }}
-      >
-        {/* <MenuItem onClick={handleClose}>
-            <ListItemIcon>
-              <DriveFileRenameOutlineIcon fontSize="small" />
-            </ListItemIcon>
-            <ListItemText>Rename</ListItemText>
-        </MenuItem> */}
+    <Menu
+      open={contextMenu !== null}
+      onClose={handleClose}
+      anchorReference="anchorPosition"
+      anchorPosition={
+        contextMenu !== null
+          ? { top: contextMenu.mouseY, left: contextMenu.mouseX }
+          : undefined
+      }
+      style={{ fontSize: "12px" }}
+    >
+      <MenuItem onClick={handleOpenFolder} disabled={!file.isFolder}>
+        <Typography fontSize="small">Open</Typography>
+      </MenuItem>
 
-        <MenuItem onClick={handleDeleteClick}>
-          <ListItemIcon>
-            <DeleteOutlineIcon fontSize="small" />
-          </ListItemIcon>
-          <ListItemText>Delete</ListItemText>
-        </MenuItem>
+      <MenuItem onClick={handleClose}>
+        <Typography fontSize="small">Rename</Typography>
+      </MenuItem>
 
-        <MenuItem>
-          <ListItemIcon>
-            <ColorLensIcon fontSize="small" />
-          </ListItemIcon>
-          <ListItemText>
-            Color
-            <input
-              type="color"
-              id="favcolor"
-              name="favcolor"
-              // value={file.color}
-              value={color}
-              onChange={e => handleOnColorChange(e, e.target.value)}
-            />
-          </ListItemText>
-        </MenuItem>
-      </Menu>
+      <MenuItem onClick={handleClose}>
+        <Typography fontSize="small">Change Color</Typography>
+      </MenuItem>
 
-      {/* <ConfirmationDialog openConfirmationDialog={openConfirmationDialog} setOpenConfirmationDialog={setOpenConfirmationDialog} />
-       */}
-
-      <DeleteFolder
-        openConfirmationDialog={openConfirmationDialog}
-        setOpenConfirmationDialog={setOpenConfirmationDialog}
-        file={file}
-      />
-    </div>
+      <MenuItem onClick={handleClose}>
+        <Typography fontSize="small">Delete</Typography>
+      </MenuItem>
+    </Menu>
   );
 };
 
