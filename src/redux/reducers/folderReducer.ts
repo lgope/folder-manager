@@ -7,15 +7,18 @@ import {
   updatePathTree,
   updateSubFolderTree,
 } from "../../utils/traverseTree";
+import { folderTree } from "../../utils/data";
+import { reHydrateStore } from "../../utils/localStorage";
 
 export const folderReducer = createSlice({
   name: "folder",
   initialState: {
-    data: null,
-    subFolder: [],
+    data: folderTree,
+    subFolder: folderTree.child,
     path: [],
     pathTree: [],
     isLoading: true,
+    ...(reHydrateStore()?.folder || {}),
   },
   reducers: {
     newFolder: (state, action) => {
@@ -61,10 +64,8 @@ export const folderReducer = createSlice({
       state.isLoading = false;
     },
 
-    getFolderRoot: (state, action) => {
-      state.data = action.payload;
-      state.subFolder = action.payload.child;
-      state.isLoading = false;
+    loadFolderData: (state) => {
+      if (Object.keys(state.data).length) state.isLoading = false;
     },
 
     updateSubFolderData: (state, action) => {
@@ -118,13 +119,17 @@ export const folderReducer = createSlice({
           );
           break;
 
-          // TODO: Resolve sort by folder issue
+        // TODO: Resolve sort by folder issue
         case "folder":
-          sortedSubFolder = sortedSubFolder.toSorted((a, b) => a.name.localeCompare(b.name) - (a.isFolder ? -1 : 1));
+          sortedSubFolder = sortedSubFolder.toSorted(
+            (a, b) => a.name.localeCompare(b.name) - (a.isFolder ? -1 : 1)
+          );
           break;
 
         case "file":
-          sortedSubFolder = sortedSubFolder.toSorted((a, b) => a.isFolder ? 1 : -1);
+          sortedSubFolder = sortedSubFolder.toSorted((a, b) =>
+            a.isFolder ? 1 : -1
+          );
           break;
 
         default:
@@ -164,7 +169,7 @@ export const folderReducer = createSlice({
 });
 
 export const {
-  getFolderRoot,
+  loadFolderData,
   newFolder,
   removeFolder,
   updateSubFolderData,
@@ -174,6 +179,6 @@ export const {
 } = folderReducer.actions;
 
 // export const selectFolders = (state: { folder: [], isLoading: boolean }) => state.folder;
-export const selectFolders = (state) => state.folder;
+export const selectFolders = (state: any) => state.folder;
 
 export default folderReducer.reducer;

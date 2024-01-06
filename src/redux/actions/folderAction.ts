@@ -1,5 +1,5 @@
 import {
-  getFolderRoot,
+  loadFolderData,
   newFolder,
   removeFolder,
   sortSubFolder,
@@ -10,10 +10,8 @@ import {
 
 import { Dispatch } from "redux";
 
-import { folderTree } from "../../utils/data";
-
 export const fetchFolderRoot = () => (dispatch: Dispatch) => {
-  dispatch(getFolderRoot(folderTree));
+  dispatch(loadFolderData());
 };
 
 export const updateSubFolder = (file) => (dispath: Dispatch) => {
@@ -28,14 +26,17 @@ export const deleteFolder = (id) => (dispatch: Dispatch) => {
   dispatch(removeFolder(id));
 };
 
-export const updateBreadCrumb = (pathIndex: number | string) => (dispatch: Dispatch) => {
-  dispatch(updateBreadCrumbTree(pathIndex));
-};
+export const updateBreadCrumb =
+  (pathIndex: number | string) => (dispatch: Dispatch) => {
+    dispatch(updateBreadCrumbTree(pathIndex));
+  };
 
-export const updateSubFolderOnSorting = (sortBy: string) => (dispatch: Dispatch) => {
-  dispatch(sortSubFolder(sortBy));
-}
+export const updateSubFolderOnSorting =
+  (sortBy: string) => (dispatch: Dispatch) => {
+    dispatch(sortSubFolder(sortBy));
+  };
 
-export const updateFolderColorOnChange = (id, color) => (dispatch: Dispatch) => {
-  dispatch(updateFolderColor({id, color}));
-}
+export const updateFolderColorOnChange =
+  (id, color) => (dispatch: Dispatch) => {
+    dispatch(updateFolderColor({ id, color }));
+  };
