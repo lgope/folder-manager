@@ -8,7 +8,13 @@ import { updateFolderColorOnChange } from "../../redux/actions/folderAction";
 import { debounce } from "../../utils/data";
 import DeleteFolder from "../DeleteFolder";
 
-const FileActions = ({ file, contextMenu, handleClose, handleOpenFolder }) => {
+const FileActions = ({
+  file,
+  contextMenu,
+  handleClose,
+  handleOpenFolder,
+  handleOnRenameFolder,
+}) => {
   const [openConfirmationDialog, setOpenConfirmationDialog] = useState(false);
   const [color, setColor] = useState(file.color);
 

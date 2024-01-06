@@ -269,6 +269,10 @@ span {
   color: #535b62;
   margin: 16px/2 0;
   font-size: 12px;
+
+  width: 102px;
+  height: 15px;
+  margin-top: -7px;
 }
 .files-panel__item.folder {
   align-self: stretch;

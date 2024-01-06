@@ -221,3 +221,6 @@ export const debounce = <T extends (...args: any[]) => ReturnType<T>>(
     }, timeout);
   };
 };
+
+export const truncateStr = (str: string, n = 12) =>
+  str.length > n ? str.substring(0, n) + "...." : str;

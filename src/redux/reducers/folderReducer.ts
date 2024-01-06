@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import {
   deleteNode,
+  editNode,
   insertNodes,
   updateNodeColor,
   updateNodeOnSort,
@@ -165,6 +166,23 @@ export const folderReducer = createSlice({
 
       state.isLoading = false;
     },
+
+    renameFolder: (state, action) => {
+      const { id, name } = action.payload;
+
+      const updatedFolderTree = editNode(state.data, id, name);
+      const updatedSubFolder = updateSubFolderTree(
+        updatedFolderTree,
+        state.path
+      );
+      const newPathTree = updatePathTree(updatedFolderTree, state.path);
+
+      state.data = updatedFolderTree;
+      state.subFolder = updatedSubFolder;
+      state.pathTree = newPathTree;
+
+      state.isLoading = false;
+    },
   },
 });
 
@@ -176,6 +194,7 @@ export const {
   updateBreadCrumbTree,
   sortSubFolder,
   updateFolderColor,
+  renameFolder,
 } = folderReducer.actions;
 
 // export const selectFolders = (state: { folder: [], isLoading: boolean }) => state.folder;

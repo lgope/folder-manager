@@ -2,6 +2,7 @@ import {
   loadFolderData,
   newFolder,
   removeFolder,
+  renameFolder,
   sortSubFolder,
   updateBreadCrumbTree,
   updateFolderColor,
@@ -39,4 +40,9 @@ export const updateSubFolderOnSorting =
 export const updateFolderColorOnChange =
   (id, color) => (dispatch: Dispatch) => {
     dispatch(updateFolderColor({ id, color }));
+  };
+
+export const updateFolderName =
+  (id: string | number, name: string = "") => (dispatch: Dispatch) => {
+    dispatch(renameFolder({ id, name }));
   };
