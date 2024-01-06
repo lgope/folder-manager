@@ -285,3 +285,13 @@ span {
 .folder-active {
   background: rgb(173 173 173 / 12%);
 }
+
+/* color picker styles */
+.folder-color-picker {
+  width: 24px;
+  height: 19px;
+  padding-left: 2px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+}
