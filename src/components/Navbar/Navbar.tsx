@@ -10,22 +10,10 @@ import MenuIcon from "@mui/icons-material/Menu";
 import SearchIcon from "@mui/icons-material/Search";
 
 import FolderOutlinedIcon from "@mui/icons-material/FolderOutlined";
-import InsertDriveFileIcon from "@mui/icons-material/InsertDriveFile";
 
 import AbcOutlinedIcon from "@mui/icons-material/AbcOutlined";
-import ArticleOutlinedIcon from '@mui/icons-material/ArticleOutlined';
-
-import AbcSharpIcon from "@mui/icons-material/AbcSharp";
-
-import Divider from "@mui/material/Divider";
-
-import DeleteIcon from "@mui/icons-material/Delete";
-import FilterAltIcon from "@mui/icons-material/FilterAlt";
-
-import CreateNewFolderOutlinedIcon from "@mui/icons-material/CreateNewFolderOutlined";
+import ArticleOutlinedIcon from "@mui/icons-material/ArticleOutlined";
 import FilterAltOutlinedIcon from "@mui/icons-material/FilterAltOutlined";
-
-import NoteAddOutlinedIcon from "@mui/icons-material/NoteAddOutlined";
 
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
@@ -120,7 +108,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-const Navbar = ({ handleOnSearch }) => {
+const Navbar = ({ handleOnSearch }: { handleOnSearch: () => void }) => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
   const [openNewFolderDialog, setOpenNewFolderDialog] = useState(false);
@@ -201,14 +189,14 @@ const Navbar = ({ handleOnSearch }) => {
                 open={open}
                 onClose={handleClose}
               >
-                <MenuItem onClick={handleOpenAddFolderDialog} disableRipple>
+                {/* <MenuItem onClick={handleOpenAddFolderDialog} disableRipple>
                   <CreateNewFolderOutlinedIcon />
                   Create Folder
                 </MenuItem>
                 <MenuItem onClick={handleClose} disableRipple>
                   <NoteAddOutlinedIcon />
                   Create File
-                </MenuItem>
+                </MenuItem> */}
                 {/* <Divider sx={{ my: 0.5 }} /> */}
                 <div className="separator">
                   <FilterAltOutlinedIcon /> Filter
@@ -220,17 +208,11 @@ const Navbar = ({ handleOnSearch }) => {
                   <AbcOutlinedIcon />
                   Alphabetically
                 </MenuItem>
-                <MenuItem
-                  onClick={() => handleOnSort("folder")}
-                  disableRipple
-                >
+                <MenuItem onClick={() => handleOnSort("folder")} disableRipple>
                   <FolderOutlinedIcon />
                   Folder
                 </MenuItem>
-                <MenuItem
-                  onClick={() => handleOnSort("file")}
-                  disableRipple
-                >
+                <MenuItem onClick={() => handleOnSort("file")} disableRipple>
                   <ArticleOutlinedIcon />
                   File
                 </MenuItem>

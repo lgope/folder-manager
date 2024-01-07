@@ -4,9 +4,8 @@ import { Menu, MenuItem, Typography } from "@mui/material";
 
 import { useDispatch } from "react-redux";
 
-import { updateFolderColorOnChange } from "../../redux/actions/folderAction";
+import { deleteFolder, updateFolderColorOnChange } from "../../redux/actions/folderAction";
 import { debounce } from "../../utils/data";
-import DeleteFolder from "../DeleteFolder";
 
 import Divider from "@mui/material/Divider";
 import Paper from "@mui/material/Paper";
@@ -26,6 +25,8 @@ import ColorLensOutlinedIcon from "@mui/icons-material/ColorLensOutlined";
 import DriveFileRenameOutlineOutlinedIcon from "@mui/icons-material/DriveFileRenameOutlineOutlined";
 import FolderDeleteOutlinedIcon from "@mui/icons-material/FolderDeleteOutlined";
 
+import Swal from 'sweetalert2'
+
 const FileActions = ({
   file,
   contextMenu,
@@ -43,13 +44,24 @@ const FileActions = ({
   handleOnCopyFolder: () => void;
   handleOnCutFolder: () => void;
 }) => {
-  const [openConfirmationDialog, setOpenConfirmationDialog] = useState(false);
   const [color, setColor] = useState(file.color);
 
   const dispatch = useDispatch();
 
   const handleDeleteClick = () => {
-    setOpenConfirmationDialog(true);
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        dispatch(deleteFolder(file.id));
+      }
+    });
     handleClose();
   };
 
@@ -120,7 +132,7 @@ const FileActions = ({
 
             <Divider style={{ margin: "2px 8px 2px 8px" }} />
 
-            <MenuItem onClick={handleClose}>
+            <MenuItem>
               <ListItemIcon>
                 <ColorLensOutlinedIcon fontSize="inherit" />
               </ListItemIcon>
@@ -157,12 +169,6 @@ const FileActions = ({
           </MenuList>
         </Paper>
       </Menu>
-
-      <DeleteFolder
-        openConfirmationDialog={openConfirmationDialog}
-        setOpenConfirmationDialog={setOpenConfirmationDialog}
-        file={file}
-      />
     </>
   );
 };

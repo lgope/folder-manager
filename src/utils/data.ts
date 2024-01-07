@@ -200,5 +200,8 @@ export const debounce = <T extends (...args: any[]) => ReturnType<T>>(
   };
 };
 
-export const truncateStr = (str: string, n = 12) =>
+export const truncateStr = (str: string, n = 22) =>
   str.length > n ? str.substring(0, n) + "...." : str;
+
+export const isNameExits = (folderArr: [] = [], name: string) =>
+  folderArr.some((folder) => folder.name === name);

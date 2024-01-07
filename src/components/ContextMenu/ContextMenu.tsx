@@ -19,8 +19,15 @@ import LightbulbOutlinedIcon from "@mui/icons-material/LightbulbOutlined";
 import FolderOutlinedIcon from "@mui/icons-material/FolderOutlined";
 import AbcOutlinedIcon from "@mui/icons-material/AbcOutlined";
 import ArticleOutlinedIcon from "@mui/icons-material/ArticleOutlined";
-import { useDispatch } from "react-redux";
-import { updateSubFolderOnSorting } from "../../redux/actions/folderAction";
+import { useDispatch, useSelector } from "react-redux";
+
+import { v4 as uuidv4 } from "uuid";
+
+import {
+  addFolder,
+  updateSubFolderOnSorting,
+} from "../../redux/actions/folderAction";
+import { selectFolders } from "../../redux/reducers/folderReducer";
 
 const ContextMenu = ({ children }: { children: ReactElement }) => {
   const [contextMenu, setContextMenu] = useState<{
@@ -33,6 +40,7 @@ const ContextMenu = ({ children }: { children: ReactElement }) => {
     mouseY: number;
   } | null>(null);
 
+  const folderData = useSelector(selectFolders);
   const dispatch = useDispatch();
 
   const setMenuRef = (
@@ -72,6 +80,26 @@ const ContextMenu = ({ children }: { children: ReactElement }) => {
     dispatch(updateSubFolderOnSorting(sortBy));
   };
 
+  const handleAddNewFile = (isFolder = true) => {
+    const { path, subFolder } = folderData;
+
+    const parentFolderId = path.length ? path[path.length - 1].id : "root";
+
+    const newFolder = {
+      id: uuidv4(),
+      name: isFolder
+        ? `untitled folder ${subFolder.length}`
+        : `untitled${subFolder.length}.json`,
+      isFolder: isFolder,
+      color: isFolder ? "#45caf1" : "#cad444",
+      parentId: parentFolderId,
+      child: [],
+    };
+
+    dispatch(addFolder(newFolder));
+    setContextMenu(null);
+  };
+
   return (
     <div className="main-context-menu" onContextMenu={handleContextMenu}>
       <Menu
@@ -88,7 +116,7 @@ const ContextMenu = ({ children }: { children: ReactElement }) => {
       >
         <Paper sx={{ width: 320, maxWidth: "100%" }}>
           <MenuList>
-            <MenuItem onClick={handleOnContextMenuClose}>
+            <MenuItem onClick={() => handleAddNewFile()}>
               <ListItemIcon>
                 <CreateNewFolderOutlinedIcon fontSize="inherit" />
               </ListItemIcon>
@@ -97,7 +125,7 @@ const ContextMenu = ({ children }: { children: ReactElement }) => {
               </ListItemText>
             </MenuItem>
 
-            <MenuItem onClick={handleOnContextMenuClose}>
+            <MenuItem onClick={() => handleAddNewFile(false)}>
               <ListItemIcon>
                 <NoteAddOutlinedIcon fontSize="inherit" />
               </ListItemIcon>
@@ -156,7 +184,7 @@ const ContextMenu = ({ children }: { children: ReactElement }) => {
                 <Typography fontSize="small">Sort By</Typography>
               </ListItemText>
               <Typography fontSize="small" onMouseOver={handleMenuMouseOver}>
-                <ChevronRightOutlinedIcon style={{marginLeft: "45px"}} />
+                <ChevronRightOutlinedIcon style={{ marginLeft: "45px" }} />
               </Typography>
             </MenuItem>
           </MenuList>

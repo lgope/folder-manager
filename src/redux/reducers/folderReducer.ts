@@ -21,6 +21,7 @@ export const folderReducer = createSlice({
     isLoading: true,
     ...(reHydrateStore()?.folder || {}),
     stagedFile: {}, // This key is used for copy and cut files. Doesn't need to save in local storage.
+    activeFolder: { id: "", editable: false },
   },
   reducers: {
     newFolder: (state, action) => {
@@ -44,6 +45,7 @@ export const folderReducer = createSlice({
       state.data = updateFolderTree;
       state.subFolder = updatedSubFolder;
 
+      state.activeFolder = { id: newFolderData.id, editable: true };
       state.isLoading = false;
     },
 
@@ -182,6 +184,7 @@ export const folderReducer = createSlice({
       state.subFolder = updatedSubFolder;
       state.pathTree = newPathTree;
 
+      state.activeFolder = {};
       state.isLoading = false;
     },
 
@@ -191,7 +194,7 @@ export const folderReducer = createSlice({
       state.stagedFile = file;
 
       state.isFolder = false;
-    }
+    },
   },
 });
 

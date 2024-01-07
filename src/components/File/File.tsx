@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import {
   addFileToStage,
@@ -8,19 +8,25 @@ import {
 } from "../../redux/actions/folderAction";
 import FolderIcon from "@mui/icons-material/Folder";
 import InsertDriveFileIcon from "@mui/icons-material/InsertDriveFile";
+import Swal from "sweetalert2";
 
 import FileActions from "./FileActions";
-import { truncateStr } from "../../utils/data";
+import { isNameExits, truncateStr } from "../../utils/data";
 
 import "./File.css";
+import { selectFolders } from "../../redux/reducers/folderReducer";
 
 const File = ({ file, index }) => {
+  const folderData = useSelector(selectFolders);
+  const { activeFolder, subFolder } = folderData;
+
   const [contextMenu, setContextMenu] = useState<{
     mouseX: number;
     mouseY: number;
   } | null>(null);
-
-  const [enableRename, setEnableRename] = useState(false);
+  const [enableRename, setEnableRename] = useState(
+    (activeFolder.id === file.id && activeFolder?.editable) || false
+  );
 
   const dispatch = useDispatch();
   const nameInputRef = useRef<HTMLParagraphElement>(null);
@@ -72,10 +78,20 @@ const File = ({ file, index }) => {
     if (nameInputRef.current !== null) {
       const newName: string = (nameInputRef.current.textContent || "").trim();
 
-      if (file.name === newName) return null;
-
-      nameInputRef.current.textContent = truncateStr(newName);
-      dispatch(updateFolderName(file.id, newName));
+      if (file.name !== newName && isNameExits(subFolder, newName)) {
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: `The name "${newName}" is already taken. Please choose a different name.`,
+        });
+        nameInputRef.current.textContent = file.name;
+      } else if (file.name === newName) {
+        nameInputRef.current.textContent = file.name;
+        return null;
+      } else {
+        nameInputRef.current.textContent = truncateStr(newName);
+        dispatch(updateFolderName(file.id, newName));
+      }
     }
   };
 
@@ -118,7 +134,7 @@ const File = ({ file, index }) => {
         opacity: stageFileOpacity.current,
       }}
       className={`folder-panel files-panel__item folder ${
-        contextMenu !== null ? "folder-active" : ""
+        contextMenu !== null || enableRename ? "folder-active" : ""
       }`}
       onDoubleClick={handleClick}
       onContextMenu={handleContextMenu}

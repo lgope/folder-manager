@@ -266,7 +266,7 @@ span {
   display: grid;
   grid-template-columns: repeat(10, 1fr);
   grid-gap: 1rem;
-  padding: 32px;
+  padding: 20px;
   font-family: "Lato", sans-serif;
 }
 .files-panel__item {
