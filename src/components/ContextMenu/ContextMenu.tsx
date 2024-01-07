@@ -24,6 +24,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { v4 as uuidv4 } from "uuid";
 
 import {
+  addFileToActiveStatus,
   addFolder,
   updateSubFolderOnSorting,
 } from "../../redux/actions/folderAction";
@@ -61,6 +62,7 @@ const ContextMenu = ({ children }: { children: ReactElement }) => {
 
   const handleContextMenu = (event: React.MouseEvent) => {
     setMenuRef(event, contextMenu, setContextMenu);
+    removeActiveFolder();
   };
 
   const handleOnContextMenuClose = () => {
@@ -100,8 +102,19 @@ const ContextMenu = ({ children }: { children: ReactElement }) => {
     setContextMenu(null);
   };
 
+  const removeActiveFolder = () => {
+    const { activeFolder } = folderData;
+    if (activeFolder.id) {
+      dispatch(addFileToActiveStatus(""));
+    }
+  };
+
   return (
-    <div className="main-context-menu" onContextMenu={handleContextMenu}>
+    <div
+      className="main-context-menu"
+      onContextMenu={handleContextMenu}
+      onClick={removeActiveFolder}
+    >
       <Menu
         open={contextMenu !== null}
         onClose={handleOnContextMenuClose}

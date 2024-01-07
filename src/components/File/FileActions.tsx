@@ -87,7 +87,7 @@ const FileActions = ({
       >
         <Paper sx={{ width: 320, maxWidth: "100%" }}>
           <MenuList>
-            <MenuItem onClick={handleOpenFolder}>
+            <MenuItem onClick={handleOpenFolder} disabled={!file.isFolder}>
               <ListItemIcon>
                 <FolderOpenOutlinedIcon fontSize="inherit" />
               </ListItemIcon>

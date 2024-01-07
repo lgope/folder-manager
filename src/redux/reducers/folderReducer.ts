@@ -70,6 +70,10 @@ export const folderReducer = createSlice({
 
     loadFolderData: (state) => {
       if (Object.keys(state.data).length) state.isLoading = false;
+
+      // clear active folder and stage file
+      state.activeFolder = { id: "", editable: false };
+      state.stagedFile = {};
     },
 
     updateSubFolderData: (state, action) => {
@@ -195,6 +199,12 @@ export const folderReducer = createSlice({
 
       state.isFolder = false;
     },
+
+    setFileToActive: (state, action) => {
+      const id = action.payload;
+
+      state.activeFolder = { id, editable: false };
+    },
   },
 });
 
@@ -208,6 +218,7 @@ export const {
   updateFolderColor,
   renameFolder,
   setFileToStaged,
+  setFileToActive,
 } = folderReducer.actions;
 
 // export const selectFolders = (state: { folder: [], isLoading: boolean }) => state.folder;

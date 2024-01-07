@@ -1,7 +1,8 @@
-import { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import {
+  addFileToActiveStatus,
   addFileToStage,
   updateFolderName,
   updateSubFolder,
@@ -53,6 +54,11 @@ const File = ({ file, index }) => {
   const handleContextMenu = (event: React.MouseEvent) => {
     event.preventDefault();
     event.stopPropagation();
+
+    // update active foder
+    updateActiveFolder(event);
+
+    // set context menu position
     setContextMenu(
       contextMenu === null
         ? {
@@ -126,6 +132,13 @@ const File = ({ file, index }) => {
     setContextMenu(null);
   };
 
+  const updateActiveFolder = (event: React.MouseEvent) => {
+    event.stopPropagation();
+    if (activeFolder.id !== file.id) {
+      dispatch(addFileToActiveStatus(file.id));
+    }
+  };
+
   return (
     <div
       style={{
@@ -134,10 +147,13 @@ const File = ({ file, index }) => {
         opacity: stageFileOpacity.current,
       }}
       className={`folder-panel files-panel__item folder ${
-        contextMenu !== null || enableRename ? "folder-active" : ""
+        contextMenu !== null || activeFolder.id === file.id || enableRename
+          ? "folder-active"
+          : ""
       }`}
       onDoubleClick={handleClick}
       onContextMenu={handleContextMenu}
+      onClick={updateActiveFolder}
     >
       <div className="folder-icon">
         {file.isFolder ? (

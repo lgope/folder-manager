@@ -3,6 +3,7 @@ import {
   newFolder,
   removeFolder,
   renameFolder,
+  setFileToActive,
   setFileToStaged,
   sortSubFolder,
   updateBreadCrumbTree,
@@ -52,3 +53,8 @@ export const updateFolderName =
 export const addFileToStage = (file) => (dispatch: Dispatch) => {
   dispatch(setFileToStaged(file));
 };
+
+export const addFileToActiveStatus =
+  (id: number | string) => (dispatch: Dispatch) => {
+    dispatch(setFileToActive(id));
+  };
