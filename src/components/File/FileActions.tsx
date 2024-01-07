@@ -8,12 +8,40 @@ import { updateFolderColorOnChange } from "../../redux/actions/folderAction";
 import { debounce } from "../../utils/data";
 import DeleteFolder from "../DeleteFolder";
 
+import Divider from "@mui/material/Divider";
+import Paper from "@mui/material/Paper";
+import MenuList from "@mui/material/MenuList";
+
+import ListItemText from "@mui/material/ListItemText";
+import ListItemIcon from "@mui/material/ListItemIcon";
+
+import ContentCut from "@mui/icons-material/ContentCut";
+import ContentCopy from "@mui/icons-material/ContentCopy";
+
+import LightbulbOutlinedIcon from "@mui/icons-material/LightbulbOutlined";
+
+import FolderOpenOutlinedIcon from "@mui/icons-material/FolderOpenOutlined";
+
+import ColorLensOutlinedIcon from "@mui/icons-material/ColorLensOutlined";
+import DriveFileRenameOutlineOutlinedIcon from "@mui/icons-material/DriveFileRenameOutlineOutlined";
+import FolderDeleteOutlinedIcon from "@mui/icons-material/FolderDeleteOutlined";
+
 const FileActions = ({
   file,
   contextMenu,
   handleClose,
   handleOpenFolder,
   handleOnRenameFolder,
+  handleOnCopyFolder,
+  handleOnCutFolder,
+}: {
+  file: any;
+  contextMenu: any;
+  handleClose: () => void;
+  handleOpenFolder: () => void;
+  handleOnRenameFolder: () => void;
+  handleOnCopyFolder: () => void;
+  handleOnCutFolder: () => void;
 }) => {
   const [openConfirmationDialog, setOpenConfirmationDialog] = useState(false);
   const [color, setColor] = useState(file.color);
@@ -43,28 +71,91 @@ const FileActions = ({
             : undefined
         }
         style={{ fontSize: "12px" }}
+        className="file-context-menu"
       >
-        <MenuItem onClick={handleOpenFolder} disabled={!file.isFolder}>
-          <Typography fontSize="small">Open</Typography>
-        </MenuItem>
+        <Paper sx={{ width: 320, maxWidth: "100%" }}>
+          <MenuList>
+            <MenuItem onClick={handleOpenFolder}>
+              <ListItemIcon>
+                <FolderOpenOutlinedIcon fontSize="inherit" />
+              </ListItemIcon>
+              <ListItemText>
+                <Typography fontSize="small">Open</Typography>
+              </ListItemText>
+            </MenuItem>
 
-        <MenuItem onClick={handleOnRenameFolder}>
-          <Typography fontSize="small">Rename</Typography>
-        </MenuItem>
+            <Divider style={{ margin: "2px 8px 2px 8px" }} />
 
-        <MenuItem onClick={() => {}}>
-          <Typography fontSize="small">Change Color</Typography>
-          <input
-            type="color"
-            className="folder-color-picker"
-            value={color}
-            onChange={(e) => handleOnColorChange(e, e.target.value)}
-          />
-        </MenuItem>
+            <MenuItem onClick={handleOnCutFolder}>
+              <ListItemIcon>
+                <ContentCut fontSize="inherit" />
+              </ListItemIcon>
+              <ListItemText>
+                <Typography fontSize="small">Cut</Typography>
+              </ListItemText>
+              <Typography fontSize="small">⌘X</Typography>
+            </MenuItem>
 
-        <MenuItem onClick={handleDeleteClick}>
-          <Typography fontSize="small">Delete</Typography>
-        </MenuItem>
+            <MenuItem onClick={handleOnCopyFolder} style={{ cursor: "copy" }}>
+              <ListItemIcon>
+                <ContentCopy fontSize="inherit" />
+              </ListItemIcon>
+              <ListItemText>
+                <Typography fontSize="small">Copy</Typography>
+              </ListItemText>
+              <Typography fontSize="small">⌘C</Typography>
+            </MenuItem>
+
+            <Divider style={{ margin: "2px 8px 2px 8px" }} />
+
+            {/* TODO: get info */}
+            <MenuItem onClick={handleClose} style={{ cursor: "help" }}>
+              <ListItemIcon>
+                <LightbulbOutlinedIcon fontSize="inherit" />
+              </ListItemIcon>
+              <ListItemText>
+                <Typography fontSize="small">Get Info</Typography>
+              </ListItemText>
+            </MenuItem>
+
+            <Divider style={{ margin: "2px 8px 2px 8px" }} />
+
+            <MenuItem onClick={handleClose}>
+              <ListItemIcon>
+                <ColorLensOutlinedIcon fontSize="inherit" />
+              </ListItemIcon>
+              <ListItemText>
+                <Typography fontSize="small">
+                  Change Color
+                  <input
+                    type="color"
+                    className="folder-color-picker"
+                    value={color}
+                    onChange={(e) => handleOnColorChange(e, e.target.value)}
+                  />
+                </Typography>
+              </ListItemText>
+            </MenuItem>
+
+            <MenuItem onClick={handleOnRenameFolder}>
+              <ListItemIcon>
+                <DriveFileRenameOutlineOutlinedIcon fontSize="inherit" />
+              </ListItemIcon>
+              <ListItemText>
+                <Typography fontSize="small">Rename</Typography>
+              </ListItemText>
+            </MenuItem>
+
+            <MenuItem onClick={handleDeleteClick}>
+              <ListItemIcon>
+                <FolderDeleteOutlinedIcon fontSize="inherit" />
+              </ListItemIcon>
+              <ListItemText>
+                <Typography fontSize="small">Delete</Typography>
+              </ListItemText>
+            </MenuItem>
+          </MenuList>
+        </Paper>
       </Menu>
 
       <DeleteFolder

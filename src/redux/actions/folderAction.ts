@@ -3,6 +3,7 @@ import {
   newFolder,
   removeFolder,
   renameFolder,
+  setFileToStaged,
   sortSubFolder,
   updateBreadCrumbTree,
   updateFolderColor,
@@ -43,6 +44,11 @@ export const updateFolderColorOnChange =
   };
 
 export const updateFolderName =
-  (id: string | number, name: string = "") => (dispatch: Dispatch) => {
+  (id: string | number, name: string = "") =>
+  (dispatch: Dispatch) => {
     dispatch(renameFolder({ id, name }));
   };
+
+export const addFileToStage = (file) => (dispatch: Dispatch) => {
+  dispatch(setFileToStaged(file));
+};

@@ -13,6 +13,7 @@ import { fetchFolderRoot } from "./redux/actions/folderAction";
 import FileList from "./components/FileList/FileList";
 import Loader from "./components/Loader/Loader";
 import BreadCrumbText from "./components/BreadCrumb/BreadCrumbText";
+import ContextMenu from "./components/ContextMenu/ContextMenu";
 
 const theme = createTheme({
   palette: {
@@ -38,7 +39,6 @@ const App: FC = (): ReactElement => {
     dispatch(fetchFolderRoot());
   }, [dispatch]);
 
-
   const handleOnSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;
 
@@ -48,20 +48,23 @@ const App: FC = (): ReactElement => {
   // if (folderData?.subFolder && folderData?.subFolder.length) {
   if (folderData?.subFolder && folderData?.subFolder.length) {
     filteredSubFolderData = folderData.subFolder.filter((file) =>
-    file.name.toLowerCase().includes(searchValue.toLowerCase()));
+      file.name.toLowerCase().includes(searchValue.toLowerCase())
+    );
   }
 
   return (
-    <ThemeProvider theme={theme}>
-      <Navbar handleOnSearch={handleOnSearch} />
-      <BreadCrumbText />
+    <ContextMenu>
+      <ThemeProvider theme={theme}>
+        <Navbar handleOnSearch={handleOnSearch} />
+        <BreadCrumbText />
 
-      {folderData && folderData?.isLoading ? (
-        <Loader />
-      ) : (
-        <FileList fileList={filteredSubFolderData} />
-      )}
-    </ThemeProvider>
+        {folderData && folderData?.isLoading ? (
+          <Loader />
+        ) : (
+          <FileList fileList={filteredSubFolderData} />
+        )}
+      </ThemeProvider>
+    </ContextMenu>
   );
 };
 

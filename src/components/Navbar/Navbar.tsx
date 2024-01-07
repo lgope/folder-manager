@@ -13,6 +13,8 @@ import FolderOutlinedIcon from "@mui/icons-material/FolderOutlined";
 import InsertDriveFileIcon from "@mui/icons-material/InsertDriveFile";
 
 import AbcOutlinedIcon from "@mui/icons-material/AbcOutlined";
+import ArticleOutlinedIcon from '@mui/icons-material/ArticleOutlined';
+
 import AbcSharpIcon from "@mui/icons-material/AbcSharp";
 
 import Divider from "@mui/material/Divider";
@@ -139,7 +141,7 @@ const Navbar = ({ handleOnSearch }) => {
     setOpenNewFolderDialog(true);
   };
 
-  const handleAlphabeticallySort = (sortBy: string) => {
+  const handleOnSort = (sortBy: string) => {
     setAnchorEl(null);
     dispatch(updateSubFolderOnSorting(sortBy));
   };
@@ -212,24 +214,24 @@ const Navbar = ({ handleOnSearch }) => {
                   <FilterAltOutlinedIcon /> Filter
                 </div>
                 <MenuItem
-                  onClick={() => handleAlphabeticallySort("alphabetically")}
+                  onClick={() => handleOnSort("alphabetically")}
                   disableRipple
                 >
                   <AbcOutlinedIcon />
                   Alphabetically
                 </MenuItem>
                 <MenuItem
-                  onClick={() => handleAlphabeticallySort("folder")}
+                  onClick={() => handleOnSort("folder")}
                   disableRipple
                 >
                   <FolderOutlinedIcon />
                   Folder
                 </MenuItem>
                 <MenuItem
-                  onClick={() => handleAlphabeticallySort("file")}
+                  onClick={() => handleOnSort("file")}
                   disableRipple
                 >
-                  <InsertDriveFileIcon />
+                  <ArticleOutlinedIcon />
                   File
                 </MenuItem>
                 {/* <MenuItem onClick={handleClose} disableRipple>

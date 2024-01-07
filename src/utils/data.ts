@@ -151,28 +151,6 @@ export const folderTree = {
   ],
 };
 
-export const deletePropertyPath = (obj, path) => {
-  if (!obj || !path) {
-    return;
-  }
-
-  if (typeof path === "string") {
-    path = path.split(".");
-  }
-
-  for (var i = 0; i < path.length - 1; i++) {
-    obj = obj[path[i]];
-
-    if (typeof obj === "undefined") {
-      return;
-    }
-  }
-
-  delete obj[path.pop()];
-
-  return obj;
-};
-
 // const objDataStructure = {
 //   a: {
 //     id: 'a',
@@ -198,7 +176,7 @@ export const deletePropertyPath = (obj, path) => {
  * @param {Number} bytes
  * @returns {String}
  */
-export const getHumanFileSize = (bytes) => {
+export const getHumanFileSize = (bytes: number): string => {
   const e = (Math.log(bytes) / Math.log(1e3)) | 0;
   return (
     +(bytes / Math.pow(1e3, e)).toFixed(2) +

@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 
 import {
+  addFileToStage,
   updateFolderName,
   updateSubFolder,
 } from "../../redux/actions/folderAction";
@@ -22,7 +23,8 @@ const File = ({ file, index }) => {
   const [enableRename, setEnableRename] = useState(false);
 
   const dispatch = useDispatch();
-  const nameInputRef = useRef<HTMLParagraphElement | null>(null);
+  const nameInputRef = useRef<HTMLParagraphElement>(null);
+  const stageFileOpacity = useRef<string | number>(1);
 
   useEffect(() => {
     if (enableRename) {
@@ -44,6 +46,7 @@ const File = ({ file, index }) => {
 
   const handleContextMenu = (event: React.MouseEvent) => {
     event.preventDefault();
+    event.stopPropagation();
     setContextMenu(
       contextMenu === null
         ? {
@@ -52,6 +55,7 @@ const File = ({ file, index }) => {
           }
         : null
     );
+    stageFileOpacity.current = 1;
   };
 
   const handleClose = () => {
@@ -65,12 +69,14 @@ const File = ({ file, index }) => {
   };
 
   const updateFolderNewName = () => {
-    const newName: string = (nameInputRef.current?.textContent || "").trim();
+    if (nameInputRef.current !== null) {
+      const newName: string = (nameInputRef.current.textContent || "").trim();
 
-    if (file.name === newName) return null;
-    6;
+      if (file.name === newName) return null;
 
-    dispatch(updateFolderName(file.id, newName));
+      nameInputRef.current.textContent = truncateStr(newName);
+      dispatch(updateFolderName(file.id, newName));
+    }
   };
 
   const renameOnBlur = () => {
@@ -93,11 +99,23 @@ const File = ({ file, index }) => {
     setEnableRename(true);
   };
 
+  const handleOnCopyFolder = () => {
+    dispatch(addFileToStage({ stageType: "copy", file }));
+    setContextMenu(null);
+  };
+
+  const handleOnCutFolder = () => {
+    stageFileOpacity.current = 0.4;
+    dispatch(addFileToStage({ stageType: "cut", file }));
+    setContextMenu(null);
+  };
+
   return (
     <div
       style={{
         position: contextMenu ? "relative" : "static",
         cursor: "context-menu",
+        opacity: stageFileOpacity.current,
       }}
       className={`folder-panel files-panel__item folder ${
         contextMenu !== null ? "folder-active" : ""
@@ -131,6 +149,8 @@ const File = ({ file, index }) => {
         handleClose={handleClose}
         handleOpenFolder={handleClick}
         handleOnRenameFolder={handleOnRenameFolder}
+        handleOnCopyFolder={handleOnCopyFolder}
+        handleOnCutFolder={handleOnCutFolder}
       />
     </div>
   );
