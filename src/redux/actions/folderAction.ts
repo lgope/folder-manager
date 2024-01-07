@@ -1,3 +1,4 @@
+import { FileType } from "../../types/interfaces";
 import {
   loadFolderData,
   newFolder,
@@ -10,6 +11,7 @@ import {
   updateChildOnPaste,
   updateFolderColor,
   updateSubFolderData,
+  updateOnDuplicate,
 } from "../reducers/folderReducer";
 
 import { Dispatch } from "redux";
@@ -63,4 +65,9 @@ export const addFileToActiveStatus =
 export const updateFileOnPaste =
   (parentId: string | number) => (dispatch: Dispatch) => {
     dispatch(updateChildOnPaste(parentId));
+  };
+
+export const updateFileOnDuplicate =
+  (file: FileType) => (dispatch: Dispatch) => {
+    dispatch(updateOnDuplicate(file));
   };

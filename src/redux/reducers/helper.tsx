@@ -22,10 +22,7 @@ export const addNewFile = (
 
   if (newFolderData.parentId !== "root") {
     const newPathTree = updatePathTree(updateFolderTree, state.path);
-console.log('first')
     state.pathTree = newPathTree;
-
-    console.log(JSON.stringify(state.pathTree, undefined, 2))
   }
 
   state.data = updateFolderTree;

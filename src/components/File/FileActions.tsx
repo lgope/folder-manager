@@ -4,7 +4,7 @@ import { Menu, MenuItem, Typography } from "@mui/material";
 
 import { useDispatch } from "react-redux";
 
-import { deleteFolder, updateFolderColorOnChange } from "../../redux/actions/folderAction";
+import { deleteFolder, updateFileOnDuplicate, updateFolderColorOnChange } from "../../redux/actions/folderAction";
 import { debounce } from "../../utils/data";
 
 import Divider from "@mui/material/Divider";
@@ -25,7 +25,11 @@ import ColorLensOutlinedIcon from "@mui/icons-material/ColorLensOutlined";
 import DriveFileRenameOutlineOutlinedIcon from "@mui/icons-material/DriveFileRenameOutlineOutlined";
 import FolderDeleteOutlinedIcon from "@mui/icons-material/FolderDeleteOutlined";
 
+import FolderCopyOutlinedIcon from '@mui/icons-material/FolderCopyOutlined';
+import FileCopyOutlinedIcon from '@mui/icons-material/FileCopyOutlined';
+
 import Swal from 'sweetalert2'
+import { FileType } from "../../types/interfaces";
 
 const FileActions = ({
   file,
@@ -36,7 +40,7 @@ const FileActions = ({
   handleOnCopyFolder,
   handleOnCutFolder,
 }: {
-  file: any;
+  file: FileType;
   contextMenu: any;
   handleClose: () => void;
   handleOpenFolder: () => void;
@@ -70,6 +74,10 @@ const FileActions = ({
     setColor(value);
     dispatch(updateFolderColorOnChange(file.id, value));
   }, 200);
+
+  const handleDuplicate = () => {
+    dispatch(updateFileOnDuplicate(file))
+  }
 
   return (
     <>
@@ -116,6 +124,16 @@ const FileActions = ({
                 <Typography fontSize="small">Copy</Typography>
               </ListItemText>
               <Typography fontSize="small">⌘C</Typography>
+            </MenuItem>
+
+            <MenuItem onClick={handleDuplicate} style={{ cursor: "copy" }}>
+              <ListItemIcon>
+                {file.isFolder ? <FolderCopyOutlinedIcon fontSize="inherit" /> : <FileCopyOutlinedIcon fontSize="inherit" />}
+              </ListItemIcon>
+              <ListItemText>
+                <Typography fontSize="small">Duplicate</Typography>
+              </ListItemText>
+              <Typography fontSize="small">⌘D</Typography>
             </MenuItem>
 
             <Divider style={{ margin: "2px 8px 2px 8px" }} />

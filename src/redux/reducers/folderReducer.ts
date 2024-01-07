@@ -223,7 +223,7 @@ export const folderReducer = createSlice({
         file.id = newId;
         file.parentId = parentId;
         file.child = updateChildParentId(file.child, file.id);
-        console.log(1);
+
         updatedStateAfterPaste = addNewFile(
           { ...state, data: updatedFolderTree },
           file,
@@ -237,6 +237,31 @@ export const folderReducer = createSlice({
       state.pathTree = updatedStateAfterPaste.pathTree;
 
       state.activeFolder = { id: file.id, editable: true };
+      state.isLoading = false;
+    },
+
+    updateOnDuplicate: (state, action) => {
+      const file = action.payload;
+
+      const updatedFile = { ...file };
+
+      const newId = uuidv4();
+
+      let updatedStateAfterPaste: IState = { ...state };
+
+      updatedFile.id = newId;
+
+      updatedFile.child = updateChildParentId(
+        updatedFile.child,
+        updatedFile.id
+      );
+      updatedStateAfterPaste = addNewFile(state, updatedFile, true);
+
+      state.data = updatedStateAfterPaste.data;
+      state.subFolder = updatedStateAfterPaste.subFolder;
+      state.pathTree = updatedStateAfterPaste.pathTree;
+
+      state.activeFolder = { id: updatedFile.id, editable: true };
       state.isLoading = false;
     },
   },
@@ -254,6 +279,7 @@ export const {
   setFileToStaged,
   setFileToActive,
   updateChildOnPaste,
+  updateOnDuplicate,
 } = folderReducer.actions;
 
 // export const selectFolders = (state: { folder: [], isLoading: boolean }) => state.folder;
