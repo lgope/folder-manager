@@ -19,7 +19,7 @@ import { selectFolders } from "../../redux/reducers/folderReducer";
 
 const File = ({ file, index }) => {
   const folderData = useSelector(selectFolders);
-  const { activeFolder, subFolder } = folderData;
+  const { activeFolder, subFolder, stagedFile } = folderData;
 
   const [contextMenu, setContextMenu] = useState<{
     mouseX: number;
@@ -67,14 +67,13 @@ const File = ({ file, index }) => {
           }
         : null
     );
-    stageFileOpacity.current = 1;
   };
 
   const handleClose = () => {
     setContextMenu(null);
   };
 
-  const handleClick = () => {
+  const handleOnOpenFolder = () => {
     if (file.isFolder) {
       dispatch(updateSubFolder({ ...file, index }));
     }
@@ -127,7 +126,6 @@ const File = ({ file, index }) => {
   };
 
   const handleOnCutFolder = () => {
-    stageFileOpacity.current = 0.4;
     dispatch(addFileToStage({ stageType: "cut", file }));
     setContextMenu(null);
   };
@@ -138,6 +136,11 @@ const File = ({ file, index }) => {
       dispatch(addFileToActiveStatus(file.id));
     }
   };
+
+  stageFileOpacity.current =
+    (stagedFile?.stageType === "cut") && (stagedFile?.file?.id === file.id)
+      ? 0.4
+      : 1;
 
   return (
     <div
@@ -151,7 +154,7 @@ const File = ({ file, index }) => {
           ? "folder-active"
           : ""
       }`}
-      onDoubleClick={handleClick}
+      onDoubleClick={handleOnOpenFolder}
       onContextMenu={handleContextMenu}
       onClick={updateActiveFolder}
     >
@@ -171,7 +174,8 @@ const File = ({ file, index }) => {
           ref={nameInputRef}
           suppressContentEditableWarning={true}
         >
-          {truncateStr(file.name)}
+          {/* {truncateStr(file.name)} */}
+          {file.name}
         </p>
       </div>
 
@@ -179,7 +183,7 @@ const File = ({ file, index }) => {
         file={file}
         contextMenu={contextMenu}
         handleClose={handleClose}
-        handleOpenFolder={handleClick}
+        handleOpenFolder={handleOnOpenFolder}
         handleOnRenameFolder={handleOnRenameFolder}
         handleOnCopyFolder={handleOnCopyFolder}
         handleOnCutFolder={handleOnCutFolder}

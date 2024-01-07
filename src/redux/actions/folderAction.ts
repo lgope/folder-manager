@@ -7,6 +7,7 @@ import {
   setFileToStaged,
   sortSubFolder,
   updateBreadCrumbTree,
+  updateChildOnPaste,
   updateFolderColor,
   updateSubFolderData,
 } from "../reducers/folderReducer";
@@ -57,4 +58,9 @@ export const addFileToStage = (file) => (dispatch: Dispatch) => {
 export const addFileToActiveStatus =
   (id: number | string) => (dispatch: Dispatch) => {
     dispatch(setFileToActive(id));
+  };
+
+export const updateFileOnPaste =
+  (parentId: string | number) => (dispatch: Dispatch) => {
+    dispatch(updateChildOnPaste(parentId));
   };

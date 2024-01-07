@@ -1,10 +1,10 @@
-export const insertNodes = (tree, parentId, newFolder) => {
+export const insertNode = (tree, parentId, newFolder) => {
   if (tree.id === parentId) {
     return { ...tree, child: [...tree.child, newFolder] };
   }
 
   const latestNode = tree?.child?.map((item) => {
-    return insertNodes(item, parentId, newFolder);
+    return insertNode(item, parentId, newFolder);
   });
 
   return { ...tree, child: latestNode };
@@ -84,3 +84,14 @@ export const updateSubFolderTree = (tree, pathArr) => {
 
   return pathTree;
 };
+
+// update child parent id on paste
+export const updateChildParentId = (childArr, newId) => {
+  const latestNode = childArr.map((item) => {
+    item.parentId = newId;
+
+    return item;
+  });
+
+  return latestNode;
+}

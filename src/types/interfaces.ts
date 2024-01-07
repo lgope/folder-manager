@@ -19,6 +19,25 @@ export interface IParentFolder {
 }
 
 export interface IFolderSelector {
-    data: [],
-    isLoading: boolean,
+  data: [];
+  isLoading: boolean;
+}
+
+export type FileType = {
+  id: string | number;
+  name: string | number;
+  isFolder: boolean;
+  parentId: string | number;
+  color: string;
+  child: [];
+};
+
+export interface IState {
+  data: FileType;
+  subFolder: [];
+  path: [];
+  pathTree: [];
+  isLoading: boolean;
+  stagedFile: { stageType: 'copy' | 'cut'; file: FileType };
+  activeFolder: { id: string | number; editable: boolean };
 }

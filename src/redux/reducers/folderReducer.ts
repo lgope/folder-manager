@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import {
   deleteNode,
   editNode,
-  insertNodes,
+  updateChildParentId,
   updateNodeColor,
   updateNodeOnSort,
   updatePathTree,
@@ -10,6 +10,10 @@ import {
 } from "../../utils/traverseTree";
 import { folderTree } from "../../utils/data";
 import { reHydrateStore } from "../../utils/localStorage";
+
+import { v4 as uuidv4 } from "uuid";
+import { addNewFile } from "./helper";
+import { IState } from "../../types/interfaces";
 
 export const folderReducer = createSlice({
   name: "folder",
@@ -20,33 +24,16 @@ export const folderReducer = createSlice({
     pathTree: [],
     isLoading: true,
     ...(reHydrateStore()?.folder || {}),
-    stagedFile: {}, // This key is used for copy and cut files. Doesn't need to save in local storage.
+    stagedFile: { stageType: "", file: {} }, // This key is used for copy and cut files. Doesn't need to save in local storage.
     activeFolder: { id: "", editable: false },
   },
   reducers: {
     newFolder: (state, action) => {
       const newFolderData = action.payload;
 
-      const updateFolderTree = insertNodes(
-        state.data,
-        newFolderData.parentId,
-        newFolderData
-      );
+      const updatedState = addNewFile(state, newFolderData);
 
-      const updatedSubFolder = state.subFolder;
-      updatedSubFolder.push(newFolderData);
-
-      if (newFolderData.parentId !== "root") {
-        const newPathTree = updatePathTree(updateFolderTree, state.path);
-
-        state.pathTree = newPathTree;
-      }
-
-      state.data = updateFolderTree;
-      state.subFolder = updatedSubFolder;
-
-      state.activeFolder = { id: newFolderData.id, editable: true };
-      state.isLoading = false;
+      state = { ...state, ...updatedState };
     },
 
     removeFolder: (state, action) => {
@@ -205,6 +192,53 @@ export const folderReducer = createSlice({
 
       state.activeFolder = { id, editable: false };
     },
+
+    updateChildOnPaste: (state, action) => {
+      const parentId = action.payload;
+      const { stageType, file } = state.stagedFile;
+
+      const newId = uuidv4();
+
+      let updatedStateAfterPaste: IState = { ...state };
+
+      if (stageType === "copy") {
+        file.id = newId;
+        file.parentId = parentId;
+        file.child = updateChildParentId(file.child, file.id);
+
+        updatedStateAfterPaste = addNewFile(state, file, true);
+      } else if (stageType === "cut" && file.parentId === parentId) {
+        // cut functionality
+
+        // paste on same file checking
+        file.id = newId;
+
+        file.child = updateChildParentId(file.child, file.id);
+        updatedStateAfterPaste = addNewFile(state, file, true);
+      } else if (file.parentId !== parentId) {
+        // delete file from prev parent node
+        const updatedFolderTree = deleteNode(state.data, file.id);
+
+        // update file with new id
+        file.id = newId;
+        file.parentId = parentId;
+        file.child = updateChildParentId(file.child, file.id);
+        console.log(1);
+        updatedStateAfterPaste = addNewFile(
+          { ...state, data: updatedFolderTree },
+          file,
+          true
+        );
+      }
+
+      state.stagedFile = {};
+      state.data = updatedStateAfterPaste.data;
+      state.subFolder = updatedStateAfterPaste.subFolder;
+      state.pathTree = updatedStateAfterPaste.pathTree;
+
+      state.activeFolder = { id: file.id, editable: true };
+      state.isLoading = false;
+    },
   },
 });
 
@@ -219,6 +253,7 @@ export const {
   renameFolder,
   setFileToStaged,
   setFileToActive,
+  updateChildOnPaste,
 } = folderReducer.actions;
 
 // export const selectFolders = (state: { folder: [], isLoading: boolean }) => state.folder;

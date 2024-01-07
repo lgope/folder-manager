@@ -26,6 +26,7 @@ import { v4 as uuidv4 } from "uuid";
 import {
   addFileToActiveStatus,
   addFolder,
+  updateFileOnPaste,
   updateSubFolderOnSorting,
 } from "../../redux/actions/folderAction";
 import { selectFolders } from "../../redux/reducers/folderReducer";
@@ -42,6 +43,8 @@ const ContextMenu = ({ children }: { children: ReactElement }) => {
   } | null>(null);
 
   const folderData = useSelector(selectFolders);
+  const { path, subFolder, stagedFile } = folderData;
+
   const dispatch = useDispatch();
 
   const setMenuRef = (
@@ -83,8 +86,6 @@ const ContextMenu = ({ children }: { children: ReactElement }) => {
   };
 
   const handleAddNewFile = (isFolder = true) => {
-    const { path, subFolder } = folderData;
-
     const parentFolderId = path.length ? path[path.length - 1].id : "root";
 
     const newFolder = {
@@ -107,6 +108,16 @@ const ContextMenu = ({ children }: { children: ReactElement }) => {
     if (activeFolder.id) {
       dispatch(addFileToActiveStatus(""));
     }
+  };
+
+  const handleOnPaste = () => {
+    let parentId = "root";
+    if (path.length) {
+      parentId = path[path.length - 1].id;
+    }
+
+    dispatch(updateFileOnPaste(parentId));
+    setContextMenu(null);
   };
 
   return (
@@ -165,7 +176,7 @@ const ContextMenu = ({ children }: { children: ReactElement }) => {
 
             <Divider style={{ margin: "2px 8px 2px 8px" }} />
 
-            <MenuItem onClick={handleOnContextMenuClose}>
+            <MenuItem onClick={handleOnPaste} disabled={!stagedFile?.stageType}>
               <ListItemIcon>
                 <ContentPaste fontSize="inherit" />
               </ListItemIcon>
