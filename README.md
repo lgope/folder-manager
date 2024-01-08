@@ -52,7 +52,7 @@ Include a brief overview of the technologies and libraries used.
 
 ## 💻 Technology Used
 
-The Wild Oasis Hotel Management Application is built using the following technologies and libraries:
+The Folder Manager Application is built using the following technologies and libraries:
 
 -   **React**
 
