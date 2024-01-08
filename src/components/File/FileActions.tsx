@@ -97,10 +97,18 @@ const FileActions = ({
         style={{ fontSize: "12px" }}
         className="file-context-menu"
       >
-        <Paper sx={{ width: 320, maxWidth: "100%" }}>
+        <Paper
+          sx={{ width: 320, maxWidth: "100%" }}
+          style={{
+            width: "210px",
+            border: "none",
+            boxShadow: "none",
+            margin: "-9px 0px -8px 0px"
+          }}
+        >
           <MenuList>
             <MenuItem onClick={handleOpenFolder} disabled={!file.isFolder}>
-              <ListItemIcon>
+              <ListItemIcon style={{ minWidth: "25px" }}>
                 <FolderOpenOutlinedIcon fontSize="inherit" />
               </ListItemIcon>
               <ListItemText>
@@ -111,7 +119,7 @@ const FileActions = ({
             <Divider style={{ margin: "2px 8px 2px 8px" }} />
 
             <MenuItem onClick={handleOnCutFolder}>
-              <ListItemIcon>
+              <ListItemIcon style={{ minWidth: "25px" }}>
                 <ContentCut fontSize="inherit" />
               </ListItemIcon>
               <ListItemText>
@@ -121,7 +129,7 @@ const FileActions = ({
             </MenuItem>
 
             <MenuItem onClick={handleOnCopyFolder} style={{ cursor: "copy" }}>
-              <ListItemIcon>
+              <ListItemIcon style={{ minWidth: "25px" }}>
                 <ContentCopy fontSize="inherit" />
               </ListItemIcon>
               <ListItemText>
@@ -131,7 +139,7 @@ const FileActions = ({
             </MenuItem>
 
             <MenuItem onClick={handleDuplicate} style={{ cursor: "copy" }}>
-              <ListItemIcon>
+              <ListItemIcon style={{ minWidth: "25px" }}>
                 {file.isFolder ? (
                   <FolderCopyOutlinedIcon fontSize="inherit" />
                 ) : (
@@ -147,7 +155,7 @@ const FileActions = ({
             <Divider style={{ margin: "2px 8px 2px 8px" }} />
 
             {/* <MenuItem onClick={handleClose} style={{ cursor: "help" }}>
-              <ListItemIcon>
+              <ListItemIcon  style={{ minWidth: "25px" }}>
                 <LightbulbOutlinedIcon fontSize="inherit" />
               </ListItemIcon>
               <ListItemText>
@@ -160,7 +168,7 @@ const FileActions = ({
             <Divider style={{ margin: "2px 8px 2px 8px" }} />
 
             <MenuItem>
-              <ListItemIcon>
+              <ListItemIcon style={{ minWidth: "25px" }}>
                 <ColorLensOutlinedIcon fontSize="inherit" />
               </ListItemIcon>
               <ListItemText>
@@ -177,7 +185,7 @@ const FileActions = ({
             </MenuItem>
 
             <MenuItem onClick={handleOnRenameFolder}>
-              <ListItemIcon>
+              <ListItemIcon style={{ minWidth: "25px" }}>
                 <DriveFileRenameOutlineOutlinedIcon fontSize="inherit" />
               </ListItemIcon>
               <ListItemText>
@@ -186,7 +194,7 @@ const FileActions = ({
             </MenuItem>
 
             <MenuItem onClick={handleDeleteClick}>
-              <ListItemIcon>
+              <ListItemIcon style={{ minWidth: "25px" }}>
                 <FolderDeleteOutlinedIcon fontSize="inherit" />
               </ListItemIcon>
               <ListItemText>

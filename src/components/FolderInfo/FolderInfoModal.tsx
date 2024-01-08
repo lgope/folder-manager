@@ -66,7 +66,7 @@ export default function FolderInfoModal({ onClose }: { onClose: () => void }) {
   return (
     <div>
       <MenuItem onClick={handleOpen} style={{ cursor: "help" }}>
-        <ListItemIcon>
+        <ListItemIcon  style={{ minWidth: "25px" }}>
           <LightbulbOutlinedIcon fontSize="inherit" />
         </ListItemIcon>
         <ListItemText>

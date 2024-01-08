@@ -9,39 +9,39 @@
 }
 
 /* file context menu styles */
-.file-context-menu .css-19v6clq-MuiPaper-root {
+/* .file-context-menu .MuiPaper-root {
   width: 210px;
   border: none;
   box-shadow: none;
 }
 
 .file-context-menu
-  .css-vbxpqz-MuiButtonBase-root-MuiMenuItem-root
+  .MuiButtonBase-root-MuiMenuItem-root
   .MuiListItemIcon-root {
   min-width: 26px;
-}
+} */
 
 /* main context menu styles */
-.main-context-menu__item .css-19v6clq-MuiPaper-root {
+/* .main-context-menu .MuiPaper-root {
   width: 210px;
   border: none;
   box-shadow: none;
 }
 
-.main-context-menu__item
-  .css-kk1bwy-MuiButtonBase-root-MuiMenuItem-root
+.main-context-menu
+  .MuiButtonBase-root-MuiMenuItem-root
   .MuiListItemIcon-root {
   min-width: 25px;
 }
 
-.main-context-menu__item .css-h4y409-MuiList-root {
+.main-context-menu .MuiList-root {
   list-style: none;
   margin: 0;
   padding: 0;
   position: relative;
   padding-top: 0px;
   padding-bottom: 0px;
-}
+} */
 
 .folder-actions {
   visibility: hidden;

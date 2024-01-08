@@ -139,10 +139,18 @@ const ContextMenu = ({ children }: { children: ReactElement }) => {
         style={{ fontSize: "12px" }}
         className="main-context-menu__item"
       >
-        <Paper sx={{ width: 320, maxWidth: "100%" }}>
-          <MenuList>
+        <Paper
+          sx={{ width: 320, maxWidth: "100%" }}
+          style={{
+            width: "210px",
+            border: "none",
+            boxShadow: "none",
+            margin: "-9px 0px -8px 0px"
+          }}
+        >
+          <MenuList className="main-context-menu_list">
             <MenuItem onClick={() => handleAddNewFile()}>
-              <ListItemIcon>
+              <ListItemIcon style={{ minWidth: "25px" }}>
                 <CreateNewFolderOutlinedIcon fontSize="inherit" />
               </ListItemIcon>
               <ListItemText>
@@ -151,7 +159,7 @@ const ContextMenu = ({ children }: { children: ReactElement }) => {
             </MenuItem>
 
             <MenuItem onClick={() => handleAddNewFile(false)}>
-              <ListItemIcon>
+              <ListItemIcon style={{ minWidth: "25px" }}>
                 <NoteAddOutlinedIcon fontSize="inherit" />
               </ListItemIcon>
               <ListItemText>
@@ -166,7 +174,7 @@ const ContextMenu = ({ children }: { children: ReactElement }) => {
               onClick={handleOnContextMenuClose}
               style={{ cursor: "help" }}
             >
-              <ListItemIcon>
+              <ListItemIcon  style={{ minWidth: "25px" }}>
                 <LightbulbOutlinedIcon fontSize="inherit" />
               </ListItemIcon>
               <ListItemText>
@@ -179,7 +187,7 @@ const ContextMenu = ({ children }: { children: ReactElement }) => {
             <Divider style={{ margin: "2px 8px 2px 8px" }} />
 
             <MenuItem onClick={handleOnPaste} disabled={!stagedFile?.stageType}>
-              <ListItemIcon>
+              <ListItemIcon style={{ minWidth: "25px" }}>
                 <ContentPaste fontSize="inherit" />
               </ListItemIcon>
               <ListItemText>
@@ -191,7 +199,7 @@ const ContextMenu = ({ children }: { children: ReactElement }) => {
             <Divider style={{ margin: "2px 8px 2px 8px" }} />
 
             <MenuItem onClick={handleOnContextMenuClose}>
-              <ListItemIcon>
+              <ListItemIcon style={{ minWidth: "25px" }}>
                 <PreviewOutlinedIcon fontSize="inherit" />
               </ListItemIcon>
               <ListItemText>
@@ -203,7 +211,7 @@ const ContextMenu = ({ children }: { children: ReactElement }) => {
             </MenuItem>
 
             <MenuItem>
-              <ListItemIcon>
+              <ListItemIcon style={{ minWidth: "25px" }}>
                 <SortOutlinedIcon fontSize="inherit" />
               </ListItemIcon>
               <ListItemText>
@@ -232,10 +240,16 @@ const ContextMenu = ({ children }: { children: ReactElement }) => {
         <Paper
           sx={{ width: 320, maxWidth: "100%" }}
           onMouseLeave={handleOnSubMenuClose}
+          style={{
+            width: "210px",
+            border: "none",
+            boxShadow: "none",
+            margin: "-9px 0px -8px 0px"
+          }}
         >
           <MenuList>
             <MenuItem onClick={() => handleOnSort("alphabetically")}>
-              <ListItemIcon>
+              <ListItemIcon style={{ minWidth: "25px" }}>
                 <AbcOutlinedIcon fontSize="inherit" />
               </ListItemIcon>
               <ListItemText>
@@ -244,7 +258,7 @@ const ContextMenu = ({ children }: { children: ReactElement }) => {
             </MenuItem>
 
             <MenuItem onClick={() => handleOnSort("folder")}>
-              <ListItemIcon>
+              <ListItemIcon style={{ minWidth: "25px" }}>
                 <FolderOutlinedIcon fontSize="inherit" />
               </ListItemIcon>
               <ListItemText>
@@ -254,7 +268,7 @@ const ContextMenu = ({ children }: { children: ReactElement }) => {
             </MenuItem>
 
             <MenuItem onClick={() => handleOnSort("file")}>
-              <ListItemIcon>
+              <ListItemIcon style={{ minWidth: "25px" }}>
                 <ArticleOutlinedIcon fontSize="inherit" />
               </ListItemIcon>
               <ListItemText>
