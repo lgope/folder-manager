@@ -30,6 +30,7 @@ import {
   updateSubFolderOnSorting,
 } from "../../redux/actions/folderAction";
 import { selectFolders } from "../../redux/reducers/folderReducer";
+import FolderInfoModal from "../FolderInfo/FolderInfoModal";
 
 const ContextMenu = ({ children }: { children: ReactElement }) => {
   const [contextMenu, setContextMenu] = useState<{
@@ -161,7 +162,7 @@ const ContextMenu = ({ children }: { children: ReactElement }) => {
 
             <Divider style={{ margin: "2px 8px 2px 8px" }} />
 
-            <MenuItem
+            {/* <MenuItem
               onClick={handleOnContextMenuClose}
               style={{ cursor: "help" }}
             >
@@ -171,8 +172,9 @@ const ContextMenu = ({ children }: { children: ReactElement }) => {
               <ListItemText>
                 <Typography fontSize="small">Get Info</Typography>
               </ListItemText>
-              {/* <Typography fontSize="small">⌘C</Typography> */}
-            </MenuItem>
+            </MenuItem> */}
+
+            <FolderInfoModal onClose={handleOnContextMenuClose} />
 
             <Divider style={{ margin: "2px 8px 2px 8px" }} />
 

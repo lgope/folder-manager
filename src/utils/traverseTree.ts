@@ -94,4 +94,19 @@ export const updateChildParentId = (childArr, newId) => {
   });
 
   return latestNode;
-}
+};
+
+export const findNode = (tree, pathArr) => {
+  let folderTree = tree.child;
+
+  if (!pathArr.length) return folderTree;
+
+  const item = pathArr.reduce((acc, curr) => {
+    acc = folderTree;
+    folderTree = folderTree[curr.index].child;
+
+    return acc;
+  }, {});
+
+  return item;
+};

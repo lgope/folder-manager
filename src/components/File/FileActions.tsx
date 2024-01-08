@@ -4,7 +4,11 @@ import { Menu, MenuItem, Typography } from "@mui/material";
 
 import { useDispatch } from "react-redux";
 
-import { deleteFolder, updateFileOnDuplicate, updateFolderColorOnChange } from "../../redux/actions/folderAction";
+import {
+  deleteFolder,
+  updateFileOnDuplicate,
+  updateFolderColorOnChange,
+} from "../../redux/actions/folderAction";
 import { debounce } from "../../utils/data";
 
 import Divider from "@mui/material/Divider";
@@ -17,19 +21,18 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ContentCut from "@mui/icons-material/ContentCut";
 import ContentCopy from "@mui/icons-material/ContentCopy";
 
-import LightbulbOutlinedIcon from "@mui/icons-material/LightbulbOutlined";
-
 import FolderOpenOutlinedIcon from "@mui/icons-material/FolderOpenOutlined";
 
 import ColorLensOutlinedIcon from "@mui/icons-material/ColorLensOutlined";
 import DriveFileRenameOutlineOutlinedIcon from "@mui/icons-material/DriveFileRenameOutlineOutlined";
 import FolderDeleteOutlinedIcon from "@mui/icons-material/FolderDeleteOutlined";
 
-import FolderCopyOutlinedIcon from '@mui/icons-material/FolderCopyOutlined';
-import FileCopyOutlinedIcon from '@mui/icons-material/FileCopyOutlined';
+import FolderCopyOutlinedIcon from "@mui/icons-material/FolderCopyOutlined";
+import FileCopyOutlinedIcon from "@mui/icons-material/FileCopyOutlined";
 
-import Swal from 'sweetalert2'
+import Swal from "sweetalert2";
 import { FileType } from "../../types/interfaces";
+import FolderInfoModal from "../FolderInfo/FolderInfoModal";
 
 const FileActions = ({
   file,
@@ -76,8 +79,8 @@ const FileActions = ({
   }, 200);
 
   const handleDuplicate = () => {
-    dispatch(updateFileOnDuplicate(file))
-  }
+    dispatch(updateFileOnDuplicate(file));
+  };
 
   return (
     <>
@@ -128,7 +131,11 @@ const FileActions = ({
 
             <MenuItem onClick={handleDuplicate} style={{ cursor: "copy" }}>
               <ListItemIcon>
-                {file.isFolder ? <FolderCopyOutlinedIcon fontSize="inherit" /> : <FileCopyOutlinedIcon fontSize="inherit" />}
+                {file.isFolder ? (
+                  <FolderCopyOutlinedIcon fontSize="inherit" />
+                ) : (
+                  <FileCopyOutlinedIcon fontSize="inherit" />
+                )}
               </ListItemIcon>
               <ListItemText>
                 <Typography fontSize="small">Duplicate</Typography>
@@ -138,15 +145,16 @@ const FileActions = ({
 
             <Divider style={{ margin: "2px 8px 2px 8px" }} />
 
-            {/* TODO: get info */}
-            <MenuItem onClick={handleClose} style={{ cursor: "help" }}>
+            {/* <MenuItem onClick={handleClose} style={{ cursor: "help" }}>
               <ListItemIcon>
                 <LightbulbOutlinedIcon fontSize="inherit" />
               </ListItemIcon>
               <ListItemText>
                 <Typography fontSize="small">Get Info</Typography>
               </ListItemText>
-            </MenuItem>
+            </MenuItem> */}
+
+            <FolderInfoModal onClose={handleClose} />
 
             <Divider style={{ margin: "2px 8px 2px 8px" }} />
 
