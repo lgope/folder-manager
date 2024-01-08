@@ -123,7 +123,7 @@ export const folderReducer = createSlice({
           break;
 
         case "file":
-          sortedSubFolder = sortedSubFolder.toSorted((a: any, b: any) =>
+          sortedSubFolder = sortedSubFolder.toSorted((a: any, _b: any) =>
             a.isFolder ? 1 : -1
           );
           break;

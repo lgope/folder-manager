@@ -9,7 +9,6 @@ export interface IFolder {
 }
 
 export type IdType = string | number;
-
 export interface IParentFolder {
   parentFolder: {
     _id: string;
@@ -38,6 +37,7 @@ export type FileType = {
   parentId: string | number;
   color: string;
   child: [];
+  index?: number | string;
 };
 
 export interface IState {
@@ -53,3 +53,5 @@ export interface IState {
 export type FileComProps = {
   file: FileType; index: number
 }
+
+export type StagedFileType = { stageType: "copy" | 'cut', file: FileType }

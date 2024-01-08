@@ -1,4 +1,4 @@
-import { FileType, IdType } from "../../types/interfaces";
+import { FileType, IdType, StagedFileType } from "../../types/interfaces";
 import {
   loadFolderData,
   newFolder,
@@ -53,7 +53,7 @@ export const updateFolderName =
     dispatch(renameFolder({ id, name }));
   };
 
-export const addFileToStage = (file: FileType) => (dispatch: Dispatch) => {
+export const addFileToStage = (file: StagedFileType) => (dispatch: Dispatch) => {
   dispatch(setFileToStaged(file));
 };
 

@@ -19,7 +19,6 @@ import FolderOutlinedIcon from "@mui/icons-material/FolderOutlined";
 import AbcOutlinedIcon from "@mui/icons-material/AbcOutlined";
 import ArticleOutlinedIcon from "@mui/icons-material/ArticleOutlined";
 
-
 import { useDispatch, useSelector } from "react-redux";
 import { v4 as uuidv4 } from "uuid";
 
@@ -31,6 +30,7 @@ import {
 } from "../../redux/actions/folderAction";
 import { selectFolders } from "../../redux/reducers/folderReducer";
 import FolderInfoModal from "../FolderInfo/FolderInfoModal";
+import { FileType } from "../../types/interfaces";
 
 const ContextMenu = ({ children }: { children: ReactElement }) => {
   const [contextMenu, setContextMenu] = useState<{
@@ -89,7 +89,7 @@ const ContextMenu = ({ children }: { children: ReactElement }) => {
   const handleAddNewFile = (isFolder = true) => {
     const parentFolderId = path.length ? path[path.length - 1].id : "root";
 
-    const newFolder = {
+    const newFolder: FileType = {
       id: uuidv4(),
       name: isFolder
         ? `untitled folder ${subFolder.length}`

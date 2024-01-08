@@ -1,4 +1,5 @@
 import { v4 as uuidv4 } from "uuid";
+import { FileType } from "../types/interfaces";
 
 /**
  * Main Data
@@ -10,37 +11,37 @@ import { v4 as uuidv4 } from "uuid";
  *
  */
 
-const folderTreeDemoData = {
-  id: 1,
-  name: "root",
-  isFolder: true,
-  parentId: "",
-  color: "#45caf1",
-  child: [
-    {
-      id: 1.1,
-      name: "public",
-      parentId: 1,
-      isFolder: true,
-      child: [
-        {
-          id: 1.121212,
-          name: "index",
-          isFolder: true,
-          child: [
-            {
-              id: 2,
-              name: "public",
-              parentId: 1.1,
-              isFolder: true,
-              child: [{ id: 2.1, name: "index", isFolder: true, child: [] }],
-            },
-          ],
-        },
-      ],
-    },
-  ],
-};
+// const folderTreeDemoData = {
+//   id: 1,
+//   name: "root",
+//   isFolder: true,
+//   parentId: "",
+//   color: "#45caf1",
+//   child: [
+//     {
+//       id: 1.1,
+//       name: "public",
+//       parentId: 1,
+//       isFolder: true,
+//       child: [
+//         {
+//           id: 1.121212,
+//           name: "index",
+//           isFolder: true,
+//           child: [
+//             {
+//               id: 2,
+//               name: "public",
+//               parentId: 1.1,
+//               isFolder: true,
+//               child: [{ id: 2.1, name: "index", isFolder: true, child: [] }],
+//             },
+//           ],
+//         },
+//       ],
+//     },
+//   ],
+// };
 
 export const folderTree = {
   id: "root",
@@ -204,4 +205,4 @@ export const truncateStr = (str: string, n = 22) =>
   str.length > n ? str.substring(0, n) + "...." : str;
 
 export const isNameExits = (folderArr: [] = [], name: string) =>
-  folderArr.some((folder) => folder.name === name);
+  folderArr.some((folder: FileType) => folder.name === name);
