@@ -16,8 +16,10 @@ import { isNameExits, truncateStr } from "../../utils/data";
 
 import "./File.css";
 import { selectFolders } from "../../redux/reducers/folderReducer";
+import { FileComProps } from "../../types/interfaces";
 
-const File = ({ file, index }) => {
+
+const File = ({ file, index }: FileComProps) => {
   const folderData = useSelector(selectFolders);
   const { activeFolder, subFolder, stagedFile } = folderData;
 
@@ -138,7 +140,7 @@ const File = ({ file, index }) => {
   };
 
   stageFileOpacity.current =
-    (stagedFile?.stageType === "cut") && (stagedFile?.file?.id === file.id)
+    stagedFile?.stageType === "cut" && stagedFile?.file?.id === file.id
       ? 0.4
       : 1;
 

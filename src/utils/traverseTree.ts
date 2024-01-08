@@ -1,4 +1,6 @@
-export const insertNode = (tree, parentId, newFolder) => {
+import { FileType, IdType, PathType } from "../types/interfaces";
+
+export const insertNode = (tree: FileType, parentId:IdType, newFolder: FileType): {} => {
   if (tree.id === parentId) {
     return { ...tree, child: [...tree.child, newFolder] };
   }
@@ -10,7 +12,7 @@ export const insertNode = (tree, parentId, newFolder) => {
   return { ...tree, child: latestNode };
 };
 
-export const editNode = (tree, id, value) => {
+export const editNode = (tree:FileType, id:IdType, value: string): {} => {
   if (tree.id === id) {
     tree.name = value;
     return tree;
@@ -19,9 +21,9 @@ export const editNode = (tree, id, value) => {
   return { ...tree };
 };
 
-export const deleteNode = (tree, id) => {
+export const deleteNode = (tree: FileType, id: IdType) => {
   for (let i = 0; i < tree?.child?.length; i++) {
-    const item = tree.child[i];
+    const item: FileType = tree.child[i];
     if (item.id === id) {
       tree.child.splice(i, 1);
       return tree;
@@ -32,22 +34,22 @@ export const deleteNode = (tree, id) => {
   return tree;
 };
 
-export const updateNodeOnSort = (tree, parentId, child) => {
+export const updateNodeOnSort = (tree: any, parentId: IdType, child: []) => {
   if (tree.id === parentId) {
     return { ...tree, child: [...child] };
   }
 
-  const latestNode = tree?.child?.map((item) => {
+  const latestNode = tree?.child?.map((item: any) => {
     return updateNodeOnSort(item, parentId, child);
   });
 
   return { ...tree, child: latestNode };
 };
 
-export const updatePathTree = (tree, pathArr = []) => {
+export const updatePathTree = (tree: any, pathArr: PathType[] = []) => {
   let folderTree = tree.child;
 
-  const pathTree = pathArr.reduce((acc, curr) => {
+  const pathTree = pathArr.reduce((acc: any, curr) => {
     folderTree = folderTree[curr.index].child;
 
     acc.push(folderTree);
@@ -58,19 +60,23 @@ export const updatePathTree = (tree, pathArr = []) => {
   return pathTree;
 };
 
-export const updateNodeColor = (tree, id, color) => {
+export const updateNodeColor = (
+  tree: any,
+  id: IdType,
+  color: string
+) => {
   if (tree.id === id) {
     return { ...tree, color };
   }
 
-  const latestNode = tree?.child?.map((item) => {
+  const latestNode = tree?.child?.map((item: FileType) => {
     return updateNodeColor(item, id, color);
   });
 
   return { ...tree, child: latestNode };
 };
 
-export const updateSubFolderTree = (tree, pathArr) => {
+export const updateSubFolderTree = (tree: any, pathArr: PathType[]) => {
   let folderTree = tree.child;
 
   if (!pathArr.length) return folderTree;
@@ -86,22 +92,23 @@ export const updateSubFolderTree = (tree, pathArr) => {
 };
 
 // update child parent id on paste
-export const updateChildParentId = (childArr, newId) => {
-  const latestNode = childArr.map((item) => {
-    item.parentId = newId;
+export const updateChildParentId = (childArr: [], newId: IdType) => {
+  const latestNode = childArr.map((item: FileType) => {
+    const updtedItem = {...item};
+    updtedItem.parentId = newId;
 
-    return item;
+    return updtedItem;
   });
 
   return latestNode;
 };
 
-export const findNode = (tree, pathArr) => {
+export const findNode = (tree: any, pathArr: PathType[]) => {
   let folderTree = tree.child;
 
   if (!pathArr.length) return folderTree;
 
-  const item = pathArr.reduce((acc, curr) => {
+  const item = pathArr.reduce((acc, curr: PathType) => {
     acc = folderTree;
     folderTree = folderTree[curr.index].child;
 

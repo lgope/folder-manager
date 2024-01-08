@@ -18,12 +18,11 @@ import FilterAltOutlinedIcon from "@mui/icons-material/FilterAltOutlined";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
-import NewFolder from "../CreateFolder/NewFolder";
 
 import { useDispatch } from "react-redux";
 import { updateSubFolderOnSorting } from "../../redux/actions/folderAction";
 
-const StyledMenu = styled((props: MenuProps) => (
+const StyledMenu = styled((props: any) => (
   <Menu
     elevation={0}
     anchorOrigin={{
@@ -108,10 +107,8 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-const Navbar = ({ handleOnSearch }: { handleOnSearch: () => void }) => {
+const Navbar = ({ handleOnSearch }: { handleOnSearch: (e:any) => void }) => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-
-  const [openNewFolderDialog, setOpenNewFolderDialog] = useState(false);
   const dispatch = useDispatch();
 
   const open = Boolean(anchorEl);
@@ -122,11 +119,6 @@ const Navbar = ({ handleOnSearch }: { handleOnSearch: () => void }) => {
 
   const handleClose = () => {
     setAnchorEl(null);
-  };
-
-  const handleOpenAddFolderDialog = () => {
-    setAnchorEl(null);
-    setOpenNewFolderDialog(true);
   };
 
   const handleOnSort = (sortBy: string) => {
@@ -225,11 +217,6 @@ const Navbar = ({ handleOnSearch }: { handleOnSearch: () => void }) => {
           </Toolbar>
         </AppBar>
       </Box>
-
-      <NewFolder
-        openNewFolderDialog={openNewFolderDialog}
-        setOpenNewFolderDialog={setOpenNewFolderDialog}
-      />
     </Fragment>
   );
 };

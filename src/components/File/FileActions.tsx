@@ -79,6 +79,7 @@ const FileActions = ({
   }, 200);
 
   const handleDuplicate = () => {
+    handleClose();
     dispatch(updateFileOnDuplicate(file));
   };
 

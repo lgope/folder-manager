@@ -8,6 +8,8 @@ export interface IFolder {
   };
 }
 
+export type IdType = string | number;
+
 export interface IParentFolder {
   parentFolder: {
     _id: string;
@@ -18,14 +20,20 @@ export interface IParentFolder {
   };
 }
 
+export type PathType = {
+  id: IdType;
+  name: string;
+  index: number;
+};
+
 export interface IFolderSelector {
   data: [];
   isLoading: boolean;
 }
 
 export type FileType = {
-  id: string | number;
-  name: string | number;
+  id: IdType;
+  name: string;
   isFolder: boolean;
   parentId: string | number;
   color: string;
@@ -38,6 +46,10 @@ export interface IState {
   path: [];
   pathTree: [];
   isLoading: boolean;
-  stagedFile: { stageType: 'copy' | 'cut'; file: FileType };
+  stagedFile: { stageType: "copy" | "cut"; file: FileType };
   activeFolder: { id: string | number; editable: boolean };
+}
+
+export type FileComProps = {
+  file: FileType; index: number
 }

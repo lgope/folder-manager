@@ -2,7 +2,6 @@
 export const localStorageMiddleware = ({ getState }: { getState: any }) => {
   return (next: any) => (action: any) => {
     const result = next(action);
-    // console.log({gs: getState()})
     localStorage.setItem("applicationState", JSON.stringify(getState()));
     return result;
   };

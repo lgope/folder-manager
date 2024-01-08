@@ -109,7 +109,7 @@ export const folderReducer = createSlice({
 
       switch (sortBy) {
         case "alphabetically":
-          sortedSubFolder = sortedSubFolder.toSorted((a, b) =>
+          sortedSubFolder = sortedSubFolder.toSorted((a: any, b: any) =>
             a.name.localeCompare(b.name)
           );
           break;
@@ -117,12 +117,13 @@ export const folderReducer = createSlice({
         // TODO: Resolve sort by folder issue
         case "folder":
           sortedSubFolder = sortedSubFolder.toSorted(
-            (a, b) => a.name.localeCompare(b.name) - (a.isFolder ? -1 : 1)
+            (a: any, b: any) =>
+              a.name.localeCompare(b.name) - (a.isFolder ? -1 : 1)
           );
           break;
 
         case "file":
-          sortedSubFolder = sortedSubFolder.toSorted((a, b) =>
+          sortedSubFolder = sortedSubFolder.toSorted((a: any, b: any) =>
             a.isFolder ? 1 : -1
           );
           break;

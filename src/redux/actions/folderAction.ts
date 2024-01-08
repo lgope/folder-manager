@@ -1,4 +1,4 @@
-import { FileType } from "../../types/interfaces";
+import { FileType, IdType } from "../../types/interfaces";
 import {
   loadFolderData,
   newFolder,
@@ -20,15 +20,15 @@ export const fetchFolderRoot = () => (dispatch: Dispatch) => {
   dispatch(loadFolderData());
 };
 
-export const updateSubFolder = (file) => (dispath: Dispatch) => {
+export const updateSubFolder = (file: FileType) => (dispath: Dispatch) => {
   dispath(updateSubFolderData(file));
 };
 
-export const addFolder = (folder) => (dispatch: Dispatch) => {
+export const addFolder = (folder: FileType) => (dispatch: Dispatch) => {
   dispatch(newFolder(folder));
 };
 
-export const deleteFolder = (id) => (dispatch: Dispatch) => {
+export const deleteFolder = (id: IdType) => (dispatch: Dispatch) => {
   dispatch(removeFolder(id));
 };
 
@@ -43,7 +43,7 @@ export const updateSubFolderOnSorting =
   };
 
 export const updateFolderColorOnChange =
-  (id, color) => (dispatch: Dispatch) => {
+  (id: IdType, color: string) => (dispatch: Dispatch) => {
     dispatch(updateFolderColor({ id, color }));
   };
 
@@ -53,7 +53,7 @@ export const updateFolderName =
     dispatch(renameFolder({ id, name }));
   };
 
-export const addFileToStage = (file) => (dispatch: Dispatch) => {
+export const addFileToStage = (file: FileType) => (dispatch: Dispatch) => {
   dispatch(setFileToStaged(file));
 };
 

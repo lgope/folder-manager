@@ -9,7 +9,7 @@ import ListItemText from "@mui/material/ListItemText";
 import ListItemIcon from "@mui/material/ListItemIcon";
 
 import LightbulbOutlinedIcon from "@mui/icons-material/LightbulbOutlined";
-import { FileType } from "../../types/interfaces";
+import { FileType, PathType } from "../../types/interfaces";
 import { selectFolders } from "../../redux/reducers/folderReducer";
 import { useSelector } from "react-redux";
 import { findNode } from "../../utils/traverseTree";
@@ -31,7 +31,14 @@ const style = {
 
 export default function FolderInfoModal({ onClose }: { onClose: () => void }) {
   const [open, setOpen] = useState(false);
-  const [selectedFile, setSelectedFile] = useState<FileType | {}>({});
+  const [selectedFile, setSelectedFile] = useState<FileType>({
+    id: "",
+    name: "",
+    isFolder: false,
+    parentId: "",
+    color: "",
+    child: [],
+  });
 
   const folderData = useSelector(selectFolders);
   const { path, subFolder, activeFolder } = folderData;
@@ -94,7 +101,7 @@ export default function FolderInfoModal({ onClose }: { onClose: () => void }) {
 
               <div className="">
                 {/* {truncateStr(file.name)} */}
-                <p>Path: Home/{path.map((p) => `${p.name}/ `)}</p>
+                <p>Path: Home/{path.map((p: PathType) => `${p.name}/ `)}</p>
               </div>
             </>
           )}
